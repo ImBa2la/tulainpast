@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+						<modules>
+							<module id="m1" name="articles" title="Расширенная фотогалерея">
+								<list pageSize="10" pageParam="page" tagNameList="articles" tagNameText="articlesRow" sort="asc"/>
+							</module>
+						</modules>
+						<template id="default">
+							<template id="gallery"/></template>
+					</section>

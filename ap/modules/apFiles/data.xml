@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="form_edit" title="Изменить данные" method="post" autocheck="autocheck" baseURI="file:///xml/data/%SECTION%.xml?/section/modules/module[@id='%MD%']/docs">
+		<param name="row" uri="/file[@id='%ID%']/@id"/>
+		<field type="text" name="title" label="Заголовок" size="40" uri="/file[@id='%ID%']/@title"/>
+		<field type="file" name="path" label="Файл" uri="/file[@id='%ID%']/@path"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="form_add" title="Добавить файл" method="post" autocheck="autocheck" baseURI="file:///xml/data/%SECTION%.xml?/section/modules/module[@id='%MD%']/docs">
+		<param name="file[id]" uri="#file"/>
+		<field type="text" name="file[title]" label="Заголовок" size="40" uri="#file"/>
+		<field type="file" name="file[path]" label="Файл" uri="#file"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="list" pageSize="10">
+		<actions>
+			<action name="new" title="Добавить" class="add"/>
+			<action name="delete" title="Удалить выбранное"/>
+		</actions>
+		<col name="sort" header="№"/>
+		<col name="title" header="Заголовок"/>
+		<col name="path" header="Файл"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist>
+	
+	<!-- Форма настроек -->
+	<form id="form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///ap/xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+		<param name="row" uri="/@id"/>
+		<field type="text" name="tab_title" label="Заголовок закладки" size="40" uri="/@title"/>
+		<field type="text" name="list_title" label="Заголовок списка" size="40" uri="/rowlist/@title"/>
+		<field type="text" name="form_add_title" label="Заголовок формы добавления" size="40" uri="/form[@id='form_add']/@title"/>
+		<field type="text" name="form_edit_title" label="Заголовок формы редактирования" size="40" uri="/form[@id='form_edit']/@title"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

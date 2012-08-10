@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<template id="default">
+		<template id="form"/></template>
+	<modules>
+		<module id="m1" name="content" title="Авторизация"/>
+		<module id="auth" name="auth">
+			<form enctype="multipart/form-data" class="registration" id="auth" method="post" autocheck="autocheck">
+				<param name="action" value="request"/>
+				<field type="text" name="login" label="Логин" login="login" check="empty" />
+				<field type="password" name="password" label="Пароль" check="empty" />
+				<buttongroup>
+					<button type="submit" name="submit" value="Войти" class="submit-1" linkUrl="registration/" linkText="Регистрация" />
+				</buttongroup>
+			</form>
+		</module>
+	</modules>
+</section>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<site name="Тула" domain="tulainpast.ru" email="lev@forumedia.ru"><users><user login="admintula" pass="c9229e737ac044baef4579fc2bbd0975" name="Admin"/><user login="123" pass="202cb962ac59075b964b07152d234b70" name="123"/></users><mysql><con id="default" host="localhost" user="root" db="tulainpast" pref="tulainpast_"/></mysql><youtube login="4whale"/></site>

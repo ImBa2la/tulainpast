@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form id="module_edit" title="Изменить модуль" method="post" autocheck="autocheck" baseURI="file:///ap/xml/data/%ID%.xml?/section/modules/module[@id='%MODULEID%']">
+	<field type="text" name="title" label="Заголовок вкладке" size="40" check="empty" uri="/@title"/>
+	<field type="select" name="name" label="Модуль" uri="/@name" check="empty"/>
+	<buttonset>
+		<button type="submit" value="Сохранить" class="ok" action="update"/>
+		<button type="submit" value="Применить" class="ok" action="apply_update"/>
+		<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+	</buttonset>
+</form>

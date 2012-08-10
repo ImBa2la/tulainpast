@@ -1,0 +1,10 @@
+DirectoryIndex index.php
+AddDefaultCharset utf-8
+php_flag display_errors on
+php_value error_reporting 7
+php_value magic_quotes_gpc off
+
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^.*/ap/?$
+RewriteCond %{REQUEST_URI} !^.+\.{1}\w{1,10}$
+RewriteRule ^.*$ index.php

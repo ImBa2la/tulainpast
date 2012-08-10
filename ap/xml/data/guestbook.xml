@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section><modules><module id="m4" name="apGuestBook" title="Список вопросов и ответов"><form id="article_form_edit" title="Изменить статью" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+		<param name="row" uri="#id"/>
+		<field type="date" name="date" label="Дата (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+		<field type="textarea" name="announce" label="Анонс" uri="#announce"/>
+		<field type="html" height="300" name="article" label="Статья" uri="#article"/>
+		<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="10">
+			<param name="image" uri="/%IMG_ID%.jpg?max=1024"/>
+			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+		</field>
+		<field type="select" name="uid" label="Автор вопроса" uri="mysql://default/articles_guestbook?aid=%ID%#uid">
+			<option value="">...</option>
+		</field>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form><form id="article_form_add" title="Добавить статью" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+		<param name="section" uri="#section"/>
+		<param name="module" uri="#module"/>
+		<param name="sort" uri="#sort"/>
+		<param name="aid" uri="mysql://default/articles_guestbook#aid"/>
+		<field type="date" name="date" label="Дата (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+		<field type="textarea" name="announce" label="Анонс" uri="#announce"/>
+		<field type="html" height="300" name="article" label="Статья" uri="#article"/>
+		<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="10">
+			<param name="image" uri="/%IMG_ID%.jpg?max=1024"/>
+			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+		</field>
+		<field type="select" name="uid" label="Автор вопроса" uri="mysql://default/articles_guestbook#uid">
+			<option value="">...</option>
+		</field>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form><rowlist id="article_list" pageSize="10" sort="asc">
+		<actions>
+			<action name="new" title="Добавить" class="add"/>
+			<action name="delete" title="Удалить выбранное"/>
+		</actions>
+		<col name="sort" header="№"/>
+		<col name="date" header="Дата"/>
+		<col name="title" header="Заголовок"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist></module><module id="m1" name="apContent" title="Гостевая"><form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+		<field type="html" name="content" label="Содержание" uri="/html" height="350"/>
+		<buttonset><button type="submit" value="Сохранить" class="ok" action="save"/></buttonset>
+	</form></module><module id="m2" name="apFeedback" title="Гостевая (форма)"><form id="feedback_addForm" title="Добавление поля" method="post" autocheck="autocheck">
+		<field type="text" name="label" label="Заголовок" size="40" check="empty"/>
+		<field type="select" name="type" label="Тип" event="onchange" size="40">
+			<option value="text">Текстовое</option>
+			<option value="email">Электронный адрес</option>
+			<option value="textarea">Расширенное текстовое поле</option>
+		</field>
+		<field type="checkbox" name="check" label="Обязательное" size="40" uri="/@check"/>
+		<field type="text" name="size" label="Длинна отображаемого поля" size="5" uri="/@size"/>
+		<field type="text" name="rows" label="Высота текстовой области" size="5" uri="/@rows"/>
+		<field type="text" name="uri" label="Имя поля в таблице базы данных для сохранения" size="40" uri="/@uri"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form><form id="feedback_editForm" title="Редактирование поля" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']/form[@id='feedback_form']/field[@name='%FID%']">
+		<field type="text" name="label" label="Заголовок" size="40" uri="/@label"/>
+		<field type="select" name="type" label="Тип" size="40" event="onchange" uri="/@type">
+			<option value="text">Текстовое</option>
+			<option value="email">Электронный адрес</option>
+			<option value="textarea">Расширенное текстовое поле</option>
+		</field>
+		<field type="checkbox" name="check" label="Обязательное" size="40" uri="/@check"/>
+		<field type="text" name="size" label="Длинна отображаемого поля" size="5" uri="/@size"/>
+		<field type="text" name="rows" label="Высота текстовой области" size="5" uri="/@rows"/>
+		<field type="text" name="uri" label="Имя поля в таблице базы данных для сохранения" size="40" uri="/@uri"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form><rowlist id="feedback_list_fields" title="Перечень полей" pageSize="10" sort="asc" add="add" delete="delete">
+		<col name="sort" header="№"/>
+		<col name="type" header="Тип поля"/>
+		<col name="label" header="Заголовок поля"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist></module></modules></section>

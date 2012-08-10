@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<modules>
+		<module id="m1" name="apContent" title="План города Тула 1897 года">
+			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+				<field type="html" name="content" label="Содержание" uri="/html" height="350"/>
+				<field type="image" name="img" label="Галерея" uri="/gallery" baseURI="file:///userfiles/maps/map1897" max="1">
+					<param name="image" uri="/%IMG_NAME%.jpg?w=1024"/>
+					<param name="image" uri="/%IMG_NAME%_preview.jpg?w=200" preview="preview"/>
+				</field>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
+		</module>
+	</modules>
+</section>

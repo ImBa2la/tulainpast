@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rowlist id="user_list" pageSize="10" add="add" delete="delete">
+	<col name="title" header="Название вкладки" class="cntr"/>
+	<col name="name" header="Название модуля" class="cntr"/>
+	<col name="version" header="Версия"/>
+	<col name="description" header="Описание"/>
+	<col name="data" header="Дата"/>
+	<buttons>
+		<button action="edit" title="Редактировать"/>
+		<button action="delete" title="Удалить"/>
+		<button action="move" title="Переместить"/>
+	</buttons>
+</rowlist>

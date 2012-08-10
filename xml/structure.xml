@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<structure>
+	<sec id="home" title="Главная" class="menu"/>
+	<sec title="Новости" id="news" url="news" class="menu"/>
+	<sec id="about" title="О проекте" class="menu"/>
+	<sec id="shop" title="Магазинчик" class="menu"/>
+	<sec id="guestbook" title="Гостевая" class="menu"/>
+	<sec id="images" title="Изображения" class="side">
+		<sec id="travelintime" title="Путешествие во времени" class="photo"/>
+		<sec id="sobfoto" title="Фотоархив" class="photo"/>
+		<sec id="babusalbom" title="Бабушкин альбом" class="photo"/>
+		<sec id="sitizens" title="Туляки и годы" class="photo">
+			<sec id="76-tulyaki-do-1917" title="Фото туляков до 1917 года" class="photo">
+				<sec id="cabinetphoto" title="Кабинетные фото" class="photo_ext"/></sec>
+			<sec id="105-tulaki1940" title="Фото туляков 1940-е" class="photo"/>
+		<sec id="tulyaki50" title="Фото туляков 1950-е" class="photo_ext"/><sec id="demonstrations" title="Демонстрации" class="photo_ext"/><sec id="familyalbum" title="Из семейного альбома" class="photo_ext"/><sec id="newyearphotos" title="Новогодние снимки" class="photo_ext"/></sec>
+	</sec>
+	<sec id="story" title="Истории" class="side">
+		<sec id="whatthreat" title="Что бывало"/>
+		<sec id="memories" title="Памятные места"/>
+		<sec id="tulastreets" title="Улицы Тулы"/>
+		<sec id="otkonkidotroll" title="От конки до троллейбуса">
+			<sec id="konka" title="Конка" class="photo"/>
+			<sec id="tramway" title="Трамвай" class="photo"/>
+			<sec id="trolleybus" title="Троллейбус" class="photo"/></sec>
+		<sec id="tulahistoric" title="Они фотографировали Тулу" class="test"/></sec>
+	<sec id="video" title="Видео" class="side"/>
+	<sec id="map" title="Топографическая эволюция" class="side"><sec title="План города Тула 1741 года. " id="map1741" class="maps"/><sec title="План города Тула 1891 года" id="map1891" class="maps"/><sec title="Карта 1891 г. Реконструкция Сумароковых" id="map1891_reconstruction_sumrakov" class="maps"/><sec title="План города Тула 1897 года" id="map1897" class="maps"/><sec title="План города Тула 1925 года" id="map1925" class="maps"/><sec title="Карта Тулы 1929-31 годы. " id="map1930" class="maps"/><sec title="План города Тула 1990 года" id="map1990" class="maps"/></sec>
+	<sec id="registration" title="Регистрация"/>
+	<sec title="Авторизация" id="auth" readonly="readonly"/><sec id="search" title="Поиск"/>
+<sec title="Подписка и рассылка" id="subscribe"/></structure>

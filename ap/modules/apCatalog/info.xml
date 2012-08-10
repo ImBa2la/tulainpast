@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+	<name>Каталог</name>
+	<version>1.0</version>
+	<description></description>
+	<dependence>
+		<module name="apArticles"/>
+	</dependence>
+	<data>08.06.2012</data>
+</module>
+<!-- apArticles Based -->

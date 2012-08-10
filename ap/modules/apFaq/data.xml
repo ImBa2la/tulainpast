@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="faq_form_edit" title="Изменить вопрос" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+		<param name="row" uri="#id"/>
+		<field type="text" name="name" label="Имя" uri="#name" disable="disable"/>		
+		<field type="text" name="email" label="Электропочта" uri="#email" />
+		<field type="text" name="phone" label="Контактный телефон" uri="#phone" />
+		<field type="date" name="date" label="Дата (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="textarea" name="question" label="Вопрос" uri="#question"/>
+		<field type="html" height="300" name="answer" label="Ответ" uri="#answer"/>		
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="faq_form_add" title="Добавить вопрос" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+		<param name="sort" uri="#sort"/>
+		<field type="text" name="name" label="Имя" uri="#name"/>
+		<field type="text" name="email" label="Электропочта" uri="#email"/>
+		<field type="text" name="phone" label="Контактный телефон" uri="#phone" />
+		<field type="date" name="date" label="Дата (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="textarea" name="question" label="Вопрос" uri="#question"/>
+		<field type="html" height="300"  name="answer" label="Ответ" uri="#answer"/>		
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="faq_list" pageSize="10" add="add" delete="delete" sort="asc">
+		<col name="sort" header="№"/>
+		<col name="date" header="Дата"/>
+		<col name="question" header="Вопрос"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist>
+
+	<!-- Форма настроек -->
+	<form id="faq_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///ap/xml/data/%SECTION%.xml?/section/modules/module[@id='%MODULE%']">
+		<param name="row" uri="/@id"/>
+		<fieldset title="Настройки Клиента" baseURI="file:///xml/data/%SECTION%.xml?/section/modules/module[@id='%MODULE%']">
+			<field type="text" name="pageSize" label="Количество записей на странице" size="3" uri="/list/@pageSize"/>
+			<field type="text" name="pageParam" label="Имя параметра пагинации" size="20" uri="/list/@pageParam"/>
+			<field type="checkbox" name="includeContent" label="Выводить ответ вместе с вопросом" uri="/list/@includeContent"/>
+			<field type="select" name="sortorder" label="Порядок сортировки" uri="/list/@sort">
+				<option value="asc">По возрастанию</option>
+				<option value="desc">По убыванию</option>
+			</field>
+		</fieldset>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+</data>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<modules>
+	<module id="m1" name="apContent" title="Топографическая эволюция"><form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+		<field type="html" name="content" label="Содержание" uri="/html" height="350"/>
+		<buttonset><button type="submit" value="Сохранить" class="ok" action="save"/></buttonset>
+	</form></module></modules>
+</section>

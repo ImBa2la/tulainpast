@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="subscribers_form_edit" title="Изменить данные" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+		<param name="row" uri="#id"/>
+		<field type="text" name="company" label="Организация" size="40" uri="#company"/>
+		<field type="text" name="city" label="Город" size="20" uri="#city"/>
+		<field type="text" name="name" label="Контактное лицо" size="40" uri="#name"/>
+		<field type="email" name="email" label="Электронная почта" size="40" uri="#email" check="email empty"/>
+		<field type="text" name="phone" label="Телефон" uri="#phone"/>
+		<field type="checkbox" name="subscribe" label="Рассылка" uri="#subscribe"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="subscribers_form_add" title="Добавить подписчика" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+		<param name="date" uri="#date"/>
+		<field type="text" name="company" label="Организация" size="40" uri="#company"/>
+		<field type="text" name="city" label="Город" size="20" uri="#city"/>
+		<field type="text" name="name" label="Контактное лицо" size="40" uri="#name"/>
+		<field type="email" name="email" label="Электронная почта" size="40" uri="#email" check="email empty"/>
+		<field type="text" name="phone" label="Телефон" uri="#phone"/>
+		<field type="checkbox" name="subscribe" label="Рассылка" uri="#subscribe"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="subscribers_list" pageSize="10" sort="asc">
+		<col name="sort" header="№"/>
+		<col name="company" header="Организация"/>
+		<col name="city" header="Город"/>
+		<col name="name" header="Контактное лицо"/>
+		<col name="email" header="E-mail"/>
+		<col name="phone" header="Телефон"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+		</buttons>
+		<actions>
+			<action name="new" title="Добавить" class="add"/>
+			<action name="delete" title="Удалить выбранное" class="del"/>
+			<action name="spam" title="Разослать сообщение"/>
+		</actions>
+	</rowlist>
+	
+	<!-- Форма настроек
+	<form id="subscribers_form_settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///ap/xml/data/%SECTION%.xml?/section/modules/module[@id='%MODULE%']">
+		<param name="row" uri="/@id"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>-->
+	
+	<!-- Форма регистрации в клиенте
+	<form title="Форма регистрации" id="register" method="post" autocheck="autocheck">
+		<param name="action" value="register"/>
+		<field type="text" name="company" label="Организация" check="empty"/>
+		<field type="text" name="city" label="Город" check="empty"/>
+		<field type="text" name="name" label="Контактное лицо" check="empty"/>
+		<field type="email" name="email" label="Электронная почта" check="email empty"/>
+		<field type="text" name="phone" label="Телефон"/>
+		<field type="checkbox" name="subscribe" label="Я согласен получать новости от smetinfo.ru"/>
+		<field type="captcha" name="captcha" label="Введите ответ (цифрами)" check="empty"/>
+		<buttongroup>
+			<button type="submit" value="Отправить"/>
+		</buttongroup>
+	</form> -->
+</data>

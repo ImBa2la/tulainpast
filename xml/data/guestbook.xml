@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<modules>
+		<module id="m1" name="content" title="Гостевая"/>
+		<module id="m2" name="guestbook" title="Гостевая (форма)">
+			<form id="feedback_form" method="post" autocheck="autocheck" baseURI="mysql://%CONNECT%/%TABLE%#" dbSave="1" dbConnect="default" dbTable="articles">
+				<param name="action" value="guestbook"/>
+				<param name="section" uri="section"/>
+				<param name="module" uri="module"/>
+				<param name="sort" uri="sort"/>
+				<param name="uid" uri="mysql://%CONNECT%/articles_guestbook/#uid"/>
+				<param name="aid" uri="mysql://%CONNECT%/articles_guestbook/#aid"/>
+				<param name="active" value="0" uri="active"/>
+				<field type="text" name="title" label="Заголовок" mysql="title" check="empty" size="40" uri="title"/>
+				<field type="textarea" name="question" label="Вопрос" check="empty" rows="6" mysql="announce" size="40" uri="announce"/>
+				<field type="captcha" name="captcha" label="Контрольное изображение:" check="empty" show="1"/>
+				<buttongroup>
+					<button type="submit" value="Готово" class="submit"/>
+				</buttongroup>
+				<good>&lt;p&gt;Ваше сообщение успешно отправлено и ожидает проверки модератором, после чего будет опубликовано.&lt;/p&gt;</good>
+				<fail>&lt;p&gt;При обработке сообщения произошла ошибка. Для устранения причины свяжитесь с администратором сайта.&lt;/p&gt;</fail>
+			</form>
+		</module>
+		<module id="m4" name="guestbookList" title="Список вопросов и ответов">
+			<list pageSize="5" pageParam="page" includeContent="1" tagNameList="guestbook" tagNameText="guestbookRow" sort="asc"/>
+		</module>
+	</modules>
+	<template id="default">
+		<template id="form"/>
+		<template id="guestbook"/></template>
+</section>

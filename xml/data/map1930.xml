@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<modules>
+		<module id="m1" name="content" title="Карта Тулы 1926-28 годы. ">
+			<gallery name="img"><img id="i1" src="userfiles/maps/map1929_1931/map1930_m1_i1.jpg" width="1000" height="1130"><preview src="userfiles/maps/map1929_1931/map1930_m1_i1_preview.jpg" width="78" height="88"/></img></gallery>
+			<html/>
+		</module>
+	</modules>
+	<template id="default">
+		<template id="maps"/></template>
+</section>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<modules>
+		<module id="m1" name="apSubsections" title="Статьи">
+			<form id="form_edit" title="Изменить подкаталог" method="post" autocheck="autocheck" baseURI="file:///xml/structure.xml?/structure/%PATH%sec[@id='%ID%']">
+				<param name="row" uri="/@id"/>
+				<field type="text" name="title" label="Заголовок" size="60" uri="/@title" check="empty"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="update"/>
+					<button type="submit" value="Применить" class="ok" action="apply_update"/>
+					<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+				</buttonset>
+			</form>
+			<form id="form_add" title="Добавить подкаталог" method="post" autocheck="autocheck">
+				<field type="text" name="title" label="Заголовок" size="60" check="empty"/>
+				<field type="text" name="alias" label="Ссылка" size="40" check="empty"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="add"/>
+					<button type="submit" value="Применить" class="ok" action="apply_add"/>
+					<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+				</buttonset>
+			</form>
+			<rowlist id="list" pageSize="10" add="add" delete="delete">
+				<col name="sort" header="№"/>
+				<col name="title" header="Заголовок"/>
+				<buttons>
+					<button action="edit" title="Редактировать"/>
+					<button action="delete" title="Удалить"/>
+					<button action="move" title="Переместить"/>
+				</buttons>
+			</rowlist>
+			<template id="p2"/>
+		</module>
+	</modules>
+</section>

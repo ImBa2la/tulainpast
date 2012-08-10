@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section>
+	<form id="common_form" method="post" autocheck="autocheck" baseURI="file:///xml/site.xml">
+		<field type="text" name="name" label="Имя сайта" size="60" check="empty" uri="?/site/@name"/>
+		<field type="text" name="domain" label="Доменное имя" size="40" check="empty" uri="?/site/@domain"/>
+		<field type="text" name="email" label="Электронная почта" size="40" check="email" uri="?/site/@email"/>
+		<field type="text" name="youtube" label="Аккаунт Youtube" size="40" uri="?/site/youtube/@login"/>
+		<fieldset title="MySQL" baseURI="file:///xml/site.xml?/site/mysql/con[@id='default']/">
+			<field type="text" name="mysql_host" label="Сервер" size="30" uri="@host"/>
+			<field type="text" name="mysql_user" label="Имя пользователя" uri="@user"/>
+			<field type="password" name="mysql_password" label="Пароль" uri="@pass" saveIfNoEmpty="saveIfNoEmpty"/>
+			<field type="text" name="mysql_db" label="Имя базы данных" uri="@db"/>
+			<field type="text" name="mysql_table_prefix" label="Префикс таблиц" uri="@pref"/>
+		</fieldset>
+		<buttonset>
+			<button action="save" type="submit" value="Сохранить" class="ok"/>
+		</buttonset>
+	</form>
+	<modules>
+		<module id="m15" title="Настройки проекта" name="apCommon"/>
+	</modules>
+</section>

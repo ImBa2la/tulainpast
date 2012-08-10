@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<section><modules><module id="m1" name="apArticles" title="Статьи"><form id="article_form_edit" title="Изменить статью" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+		<param name="row" uri="#id"/>
+		<field type="date" name="date" label="Дата (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+		<field type="html" name="announce" label="Анонс" uri="#announce"/>
+		<field type="html" height="300" name="article" label="Статья" uri="#article"/>
+		<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="30" hasTitle="hasTitle">
+			<param name="image" uri="/%IMG_ID%.jpg?max=1024"/>
+			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+		</field>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form><form id="article_form_add" title="Добавить статью" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+		<param name="section" uri="#section"/>
+		<param name="module" uri="#module"/>
+		<param name="sort" uri="#sort"/>
+		<field type="date" name="date" label="Дата (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="text" name="title" label="Заголовок" size="60" uri="#title"/>
+		<field type="html" name="announce" label="Анонс" uri="#announce"/>
+		<field type="html" height="300" name="article" label="Статья" uri="#article"/>
+		<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="30" hasTitle="hasTitle">
+			<param name="image" uri="/%IMG_ID%.jpg?max=1024"/>
+			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+		</field>
+		<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form><rowlist id="article_list" pageSize="10" sort="asc">
+		<actions>
+			<action name="new" title="Добавить" class="add"/>
+			<action name="delete" title="Удалить выбранное"/>
+		</actions>
+		<col name="sort" header="№"/>
+		<col name="date" header="Дата"/>
+		<col name="title" header="Заголовок"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+			<button action="move" title="Переместить"/>
+		</buttons>
+	</rowlist></module></modules></section>

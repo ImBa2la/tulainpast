@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="form_edit" title="Изменить информацию" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+		<param name="row" uri="#id"/>
+		<field type="text" name="name" label="Имя" uri="#name"/>
+		<field type="text" name="surname" label="Фамилия" uri="#surname"/>
+		<field type="text" name="phone" label="Телефон" uri="#phone"/>
+		<field type="text" name="email" label="Электронная почта" uri="#email"/>
+		<field type="text" name="login" label="Логин" uri="#login"/>
+		<field type="password" name="password" label="Пароль" uri="#password" saveMD5="saveMD5" saveIfNoEmpty="saveIfNoEmpty"/>
+		<field type="textarea" name="comment" label="Коментарий" uri="#comment"/>
+		<field type="checkbox" name="active" label="Активирован" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="form_add" title="Добавить клиента" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+		<param name="date" uri="#date"/>
+		<field type="text" name="name" label="Имя" uri="#name"/>
+		<field type="text" name="surname" label="Фамилия" uri="#surname"/>
+		<field type="text" name="phone" label="Телефон" uri="#phone"/>
+		<field type="text" name="email" label="Электронная почта" uri="#email"/>
+		<field type="text" name="login" label="Логин" uri="#login"/>
+		<field type="password" name="password" label="Пароль" uri="#password" saveMD5="saveMD5" saveIfNoEmpty="saveIfNoEmpty"/>
+		<field type="textarea" name="comment" label="Коментарий" uri="#comment"/>
+		<field type="checkbox" name="active" label="Активирован" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="list" pageSize="10" sort="asc">
+		<actions>
+			<action name="new" title="Добавить" class="add"/>
+			<action name="delete" title="Удалить выбранное"/>
+		</actions>
+		<col name="sort" header="№"/>
+		<col name="date" header="Дата" sort="sort"/>
+		<col name="login" header="Логин" sort="sort"/>
+		<col name="name" header="Имя" sort="sort"/>
+		<col name="surname" header="Фамилия" sort="sort"/>
+		<col name="phone" header="Телефон"/>
+		<col name="email" header="E-mail"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+		</buttons>
+	</rowlist>
+</data>
