@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <section>
 	<modules>
-		<module id="m1" name="apSubsections" title="Статьи">
+		<module id="m2" name="apContent" title="Контент"><form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+		<field type="html" name="content" label="Содержание" uri="/html" height="350"/>
+		<buttonset><button type="submit" value="Сохранить" class="ok" action="save"/></buttonset>
+	</form></module><module id="m1" name="apSubsections" title="Статьи">
 			<form id="form_edit" title="Изменить подкаталог" method="post" autocheck="autocheck" baseURI="file:///xml/structure.xml?/structure/%PATH%sec[@id='%ID%']">
 				<param name="row" uri="/@id"/>
 				<field type="text" name="title" label="Заголовок" size="60" uri="/@title" check="empty"/>
@@ -29,7 +32,7 @@
 					<button action="move" title="Переместить"/>
 				</buttons>
 			</rowlist>
-			<template id="p2"/>
+			<template id="p4"/>
 		</module>
 	</modules>
 </section>

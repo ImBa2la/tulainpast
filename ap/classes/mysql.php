@@ -70,7 +70,7 @@ function insert($table,$values){
 	$query='insert into `'.$this->getTableName($table).'` (`'.implode('`,`',array_keys($values)).'`) values ('.implode(',',$values).')';
 	return $this->query($query);
 }
-function updateRow($table,$values,$cond){
+function update($table,$values,$cond){
 	$ar=array();
 	foreach($values as $name => $value) $ar[]='`'.$name.'`="'.addslashes($value).'"';
 	$query = 'UPDATE `'.$this->getTableName($table).'` SET '.implode(",",$ar).($cond ? ' WHERE '.$cond : null);

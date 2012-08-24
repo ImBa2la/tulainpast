@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Форма редактирования -->
+	<form id="form_edit" title="Изменить информацию" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
+		<param name="row" uri="#id"/>
+		<field type="date" name="date" label="Дата регистрации (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="text" name="login" label="Логин" size="30" uri="#login" check="empty"/>
+		<field type="password" name="pass" label="Новый пароль" size="20" uri="#pass" saveMD5="saveMD5" saveIfNoEmpty="saveIfNoEmpty"/>
+		<field type="text" name="name" label="Имя" size="60" uri="#name"/>
+		<field type="text" name="phone" label="Телефон" size="40" uri="#phone"/>
+		<field type="text" name="email" label="Электронная почта" size="30" uri="#email" check="email"/>
+		<field type="textarea" name="address" label="Адрес" uri="#address"/>
+		<field type="textarea" name="comment" label="Комментарий" uri="#comment"/>
+		<field type="checkbox" name="subscribe" label="Получать новости" uri="#subscribe"/>
+		<field type="checkbox" name="active" label="Активирован" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="update"/>
+			<button type="submit" value="Применить" class="ok" action="apply_update"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Форма добавления -->
+	<form id="form_add" title="Добавить пользователя" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%">
+		<field type="date" name="date" label="Дата регистрации (дд.мм.гггг)" check="empty" uri="#date"/>
+		<field type="text" name="login" label="Логин" size="30" uri="#login" check="empty"/>
+		<field type="password" name="pass" label="Пароль" size="20" uri="#pass" saveMD5="saveMD5" check="empty"/>
+		<field type="text" name="name" label="Имя" size="60" uri="#name"/>
+		<field type="text" name="phone" label="Телефон" size="40" uri="#phone"/>
+		<field type="text" name="email" label="Электронная почта" size="30" uri="#email" check="email"/>
+		<field type="textarea" name="address" label="Адрес" uri="#address"/>
+		<field type="textarea" name="comment" label="Комментарий" uri="#comment"/>
+		<field type="checkbox" name="subscribe" label="Получать новости" uri="#subscribe"/>
+		<field type="checkbox" name="active" label="Активирован" uri="#active"/>
+		<buttonset>
+			<button type="submit" value="Сохранить" class="ok" action="add"/>
+			<button type="submit" value="Применить" class="ok" action="apply_add"/>
+			<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+		</buttonset>
+	</form>
+	
+	<!-- Список записей -->
+	<rowlist id="list" pageSize="12" sort="asc">
+		<actions>
+			<action name="new" title="Добавить" class="add"/>
+			<action name="delete" title="Удалить выбранное"/>
+		</actions>
+		<col name="sort" header="№"/>
+		<col name="date" header="Дата" sort="sort"/>
+		<col name="login" header="Логин" sort="sort"/>
+		<col name="name" header="Имя" sort="sort"/>
+		<col name="email" header="E-mail" sort="sort"/>
+		<col name="active"/>
+		<buttons>
+			<button action="edit" title="Редактировать"/>
+			<button action="delete" title="Удалить"/>
+		</buttons>
+	</rowlist>
+</data>

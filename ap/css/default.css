@@ -631,6 +631,15 @@ padding-left:32px;
 border:1px outset #df813e;
 color:#d73800;
 }
+input[type='button'].filter,
+input[type='submit'].filter{
+vertical-align: top;
+padding:3px 10px;
+line-height:14px;
+}
+form#filter{
+	text-align:right;
+}
 
 /* загрузка файла */
 .fileinfo{

@@ -3,6 +3,8 @@ require 'formGallery.php';
 class apArticles extends module{
 private $rl;
 private $forms;
+protected $table = 'articles';
+protected $tableImages = 'articles_images';
 function getRow(){
 	if($row = param('row')){
 		if(is_array($row)) foreach($row as $i => $r) $row[$i] = intval($r);
@@ -11,7 +13,7 @@ function getRow(){
 	return $row;
 }
 function setRow($v){
-	setParam('row',$v);
+	param('row',$v);
 }
 function getMessSessionName(){
 	return $this->getSection()->getId().'_'.$this->getId();
@@ -69,33 +71,31 @@ function getForm($action){
 		case 'update':
 		case 'apply_update':
 		case 'edit':
-			if($e = $xml->getElementById('article_form_edit'))
+			if($e = $this->query('form[@id="article_form_edit"]')->item(0))
 				$form_element = $formxml->appendChild($formxml->importNode($e));
 			break;
 		case 'new':
 		case 'add':
 		case 'apply_add':
 		default:
-			if($e = $xml->getElementById('article_form_add'))
+			if($e = $this->query('form[@id="article_form_add"]')->item(0))
 				$form_element = $formxml->appendChild($formxml->importNode($e));
 			break;
 	}
 	if($form_element){
-		$this->forms[$action] = new formGallery($form_element);
+		$this->forms[$action] = new formGallery($form_element,$this->tableImages);
 		return $this->forms[$action];
 	}
 }
 function getList(){
 	if(!$this->rl){
-		$xml = $this->getSection()->getXML();
-		if($list_element = $xml->query('rowlist[@id="article_list"]',$this->getRootElement())->item(0)){
+		if($list_element = $this->query('rowlist[@id="article_list"]')->item(0)){
 			$this->rl = new mysqllist($list_element,array(
-				'table' => 'articles',
+				'table' => $this->table,
 				'cond' => '`section`="'.$this->getSection()->getID().'" AND `module`="'.$this->getId().'"',
 				'page' => param('page')
 			));
 			$this->rl->addDateFormat('date','d.m.Y');
-			$this->rl->build();
 		}
 	}
 	return $this->rl;
@@ -109,7 +109,7 @@ function run(){
 				if($row = $this->getRow()){
 					$mysql = new mysql();
 					$state = !(param('active')=='on');
-					$res = $mysql->updateRow('articles',array(
+					$res = $mysql->update($this->table,array(
 						'active' => $state ? '1' : '0'
 					),'`id`='.$row);
 					if(!$res) $state = !$state;
@@ -151,10 +151,15 @@ function run(){
 				$this->onNew($action);
 				break;
 			default:
-				if($rl = $this->getList()){
-					$_out->addSectionContent($rl->getRootElement());
-				}
+				$this->showList();
 		}
+	}
+}
+function showList(){
+	global $_out;
+	if($rl = $this->getList()){
+		$rl->build();
+		$_out->addSectionContent($rl->getRootElement());
 	}
 }
 function onNew($action){
@@ -171,7 +176,7 @@ function onEdit($action){
 		$form = $this->getForm($action);
 		$form->replaceURI(array(
 			'ID'=>$row,
-			'TABLE'=>$mysql->getTableName('articles'),
+			'TABLE'=>$mysql->getTableName($this->table),
 			'SECTION'=>$this->getSection()->getId()
 		));
 		$form->load($row);
@@ -183,16 +188,16 @@ function onEdit($action){
 function onAdd($action){
 	$mysql = new mysql();
 	$form = $this->getForm($action);
-	$this->setRow($row = $mysql->getNextId('articles'));
+	$this->setRow($row = $mysql->getNextId($this->table));
 	$values = array_merge($_REQUEST,array(
 		'section' => $this->getSection()->getId(),
 		'module' => $this->getId(),
-		'date' => $this->strToDate($_REQUEST['date']),
+		'date' => $_REQUEST['date'] ? $this->strToDate($_REQUEST['date']) : date('Y-m-d H:i:s'),
 		'sort' => $this->getNextSortIndex()
 	));
 	$form->replaceURI(array(
 		'ID'=>$row,
-		'TABLE'=>$mysql->getTableName('articles'),
+		'TABLE'=>$mysql->getTableName($this->table),
 		'SECTION'=>$this->getSection()->getId()
 	));
 	$form->save($values,$row);
@@ -204,25 +209,26 @@ function onUpdate($action){
 		$form = $this->getForm($action);
 		$form->replaceURI(array(
 			'ID'=>$row,
-			'TABLE'=>$mysql->getTableName('articles'),
+			'TABLE'=>$mysql->getTableName($this->table),
 			'SECTION'=>$this->getSection()->getId()
 		));
 		$values = array_merge($_REQUEST,array(
-			'date' => $this->strToDate($_REQUEST['date']),
+			'date' => $_REQUEST['date'] ? $this->strToDate($_REQUEST['date']) : date('Y-m-d H:i:s'),
 		));
 		$form->save($values,$row);
 	}
 	return $row;
 }
 function onDelete($action){
-	if(($row = $this->getRow())
-		&& ($rl = $this->getList())
-	){
+	return $this->deleteRow($this->getRow());
+}
+function deleteRow($row){
+	if($row	&& ($rl = $this->getList())){
 		if(!is_array($row)) $row = array($row);
 		$form = $this->getForm('edit');
 		foreach($row as $id){
 			$xml = new xml();
-			$f = new formGallery($xml->appendChild($xml->importNode($form->getRootElement()->cloneNode(true))));
+			$f = new formGallery($xml->appendChild($xml->importNode($form->getRootElement()->cloneNode(true))),$this->tableImages);
 			$f->replaceURI(array(
 				'ID'=>$id,
 				'TABLE'=>$rl->getTableName(),
@@ -238,16 +244,15 @@ function getNextSortIndex(){
 	$mysql = new mysql();
 	$index = 1;
 	$rs = $mysql->query('select max(`sort`)+1 as `new_sort_index`
-		from `'.$mysql->getTableName('articles').'`
+		from `'.$mysql->getTableName($this->table).'`
 		where `section`="'.$this->getSection()->getID().'" AND `module`="'.$this->getId().'"');
 	if($rs && ($row = mysql_fetch_assoc($rs)) && $row['new_sort_index']) $index = $row['new_sort_index'];
 	return $index;
 }
 function install(){
 	$mysql = new mysql();
-	$table = 'articles';
-	if(!$mysql->hasTable($table)){
-		$mysql->query('CREATE TABLE `'.$mysql->getTableName($table).'` (
+	if(!$mysql->hasTable($this->table)){
+		$mysql->query('CREATE TABLE `'.$mysql->getTableName($this->table).'` (
 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 `section` varchar(63) DEFAULT NULL,
 `module` varchar(15) DEFAULT NULL,
@@ -261,9 +266,8 @@ PRIMARY KEY (`id`),
 KEY `SectionIndex` (`section`)
 )');
 	}
-	$table = 'articles_images';
-	if(!$mysql->hasTable($table)){
-		$mysql->query('CREATE TABLE `'.$mysql->getTableName($table).'` (
+	if(!$mysql->hasTable($this->tableImages)){
+		$mysql->query('CREATE TABLE `'.$mysql->getTableName($this->tableImages).'` (
 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 `id_article` int(10) unsigned DEFAULT NULL,
 `field_name` varchar(31) DEFAULT NULL,
@@ -273,8 +277,7 @@ KEY `SectionIndex` (`section`)
 PRIMARY KEY (`id`)
 )');
 	}
-	
-	$xml_data = new xml(PATH_MODULE.get_class($this).'/data.xml');
+	$xml_data = new xml(PATH_MODULE.$this->getName().'/data.xml');
 	$xml_sec = $this->getSection()->getXML();
 	$ar = array('article_form_edit','article_form_add','article_list');
 	foreach($ar as $id){
@@ -298,9 +301,9 @@ PRIMARY KEY (`id`)
 }
 function uninstall(){
 	$mysql = new mysql();
-	$table = 'articles';
+	$table = $this->table;
 	if($rs = $mysql->query('select * from `'.$mysql->getTableName($table).'` where `section`="'.$this->getSection()->getID().'" AND `module`="'.$this->getId().'"'))
-		while($r = mysql_fetch_array($rs)) $this->onDelete($r['id']);
+		while($r = mysql_fetch_array($rs)) $this->deleteRow($r['id']);
 	if($sec = ap::getClientSection($this->getSection()->getId())){
 		$modules = $sec->getModules();
 		if($modules->remove($this->getId()))
@@ -396,6 +399,8 @@ function settings($action){
 								}
 								
 								$xmlData->save();
+								
+								if($fieldName=='announce') param('announceType','textarea');
 							}
 						}elseif($e){
 							$e->parentNode->insertBefore($xmlData->createElement('place',array('for'=>$fieldName)),$e);
@@ -423,10 +428,9 @@ function settings($action){
 		$isImageField = $this->evaluate('count(form//field[@name="image"])')==2 && !(!$isImageField && $isUpdate);
 		if(!$isImageField){
 			while($ff = $form->getField('imgNum')) $ff->remove();
-			if($ff = $form->getField('previewSizeH')) $ff->remove();
-			if($ff = $form->getField('previewSizeV')) $ff->remove();
-			if($ff = $form->getField('previewSizeMax')) $ff->remove();
-			if($ff = $form->getField('imgSizeMax')) $ff->remove();
+			$arImgPropFields = array('previewSizeH','previewSizeV','previewSizeMax','imgSizeMax','hasTitle');
+			foreach($arImgPropFields as $fieldName)
+				if($ff = $form->getField($fieldName)) $ff->remove();
 		}
 		
 		$isAnnounceField = $this->evaluate('count(form//field[@name="announce"])')==2;

@@ -1,6 +1,27 @@
 <?
 class apSubsections extends module{
 private $rl;
+function ajax($params,$xml,$mysql){
+	if($parent = $params['parent']){
+		if(($sec_parent = ap::getClientSection($parent)) || ($parent=='apStruct')){
+			header('Content-type: text/xml');
+			$xml = new xml(null,'seclist',false);
+			$res = ap::getClientStructure()->query($parent == 'apStruct' ? '/structure/sec' : '//sec[@id="'.$sec_parent->getId().'"]/sec');
+			foreach($res as $sec){
+				$xml->de()->appendChild($xml->createElement('sec',array(
+					'id'	=>	$sec->getAttribute('id'),
+					'title'	=>	$sec->getAttribute('title'),
+				)));
+			}
+			echo $xml;
+		}
+		die;
+	}
+	if($issetid = $params['isset']){
+		echo ap::getClientSection($issetid) ? '0' : '1';
+		die;
+	}
+}
 function getRow(){
 	return param('row');
 }
@@ -163,6 +184,8 @@ function run(){
 			case 'new':
 				if($ff = $form->getField('date'))
 					$ff->setValue(date('d.m.Y'));
+				if($ff = $form->getField('alias'))
+					$ff->setValue($form->getRootElement()->getAttribute('pref'));
 				$_out->addSectionContent($form->getRootElement());
 				$this->getSection()->getTemplate()->addTemplate('../../modules/'.__CLASS__.'/tpl.xsl');
 				break;

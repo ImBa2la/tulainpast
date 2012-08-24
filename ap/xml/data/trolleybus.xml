@@ -9,8 +9,8 @@
 									<place for="announce"/>
 									<place for="article"/>
 									<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="90" hasTitle="hasTitle">
-										<param name="image" uri="/%IMG_ID%.jpg?max=1600"/>
-										<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+										<param name="image" uri="/%IMG_ID%.jpg?max=1024&amp;waterMark=/images/__watermark.png&amp;waterW=65&amp;waterH=65&amp;waterAlpha=1&amp;waterOffsetX=9&amp;waterOffsetY=14&amp;waterOpacity=80"/>
+										<param name="image" uri="/%IMG_ID%_preview.jpg?w=200&amp;waterMark=/images/__watermark.png&amp;waterW=18&amp;waterH=18&amp;waterAlpha=1&amp;waterOffsetX=3&amp;waterOffsetY=4&amp;waterOpacity=80" preview="preview"/>
 									</field>
 									<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
 									<buttonset>
@@ -28,8 +28,8 @@
 									<place for="announce"/>
 									<place for="article"/>
 									<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="90" hasTitle="hasTitle">
-										<param name="image" uri="/%IMG_ID%.jpg?max=1600"/>
-										<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+										<param name="image" uri="/%IMG_ID%.jpg?max=1024&amp;waterMark=/images/__watermark.png&amp;waterW=65&amp;waterH=65&amp;waterAlpha=1&amp;waterOffsetX=9&amp;waterOffsetY=14&amp;waterOpacity=80"/>
+										<param name="image" uri="/%IMG_ID%_preview.jpg?w=200&amp;waterMark=/images/__watermark.png&amp;waterW=18&amp;waterH=18&amp;waterAlpha=1&amp;waterOffsetX=3&amp;waterOffsetY=4&amp;waterOpacity=80" preview="preview"/>
 									</field>
 									<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
 									<buttonset>
@@ -54,5 +54,35 @@
 									</buttons>
 								</rowlist>
 							</module>
+							<module id="m2" name="apSubsections" title="Подразделы">
+			<form id="form_edit" title="Изменить данные" method="post" autocheck="autocheck" baseURI="file:///xml/structure.xml?/structure/%PATH%sec[@id='%ID%']">
+				<param name="row" uri="/@id"/>
+				<field type="text" name="title" label="Заголовок" size="60" uri="/@title" check="empty"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="update"/>
+					<button type="submit" value="Применить" class="ok" action="apply_update"/>
+					<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+				</buttonset>
+			</form>
+			<form id="form_add" title="Добавить галерею" method="post" autocheck="autocheck">
+				<field type="text" name="title" label="Заголовок" size="60" check="empty"/>
+				<field type="text" name="alias" label="Ссылка" size="40" check="empty"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="add"/>
+					<button type="submit" value="Применить" class="ok" action="apply_add"/>
+					<button type="submit" value="Отмена" class="cancel" action="cancel"/>
+				</buttonset>
+			</form>
+			<rowlist id="list" pageSize="10" add="add" delete="delete">
+				<col name="sort" header="№"/>
+				<col name="title" header="Заголовок"/>
+				<buttons>
+					<button action="edit" title="Редактировать"/>
+					<button action="delete" title="Удалить"/>
+					<button action="move" title="Переместить"/>
+				</buttons>
+			</rowlist>
+			<template id="p3"/>
+		</module>
 						</modules>
 					</section>

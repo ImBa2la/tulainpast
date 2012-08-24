@@ -115,7 +115,7 @@ function run(){
 				if($row){
 					$mysql = new mysql();
 					$state = !(param('active')=='on');
-					$res = $mysql->updateRow('users',array(
+					$res = $mysql->update('users',array(
 						'subscribe' => $state ? '1' : '0'
 					),'`id`='.$row);
 					if(!$res) $state = !$state;

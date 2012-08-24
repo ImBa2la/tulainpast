@@ -2,7 +2,7 @@
 <section>
 	<modules>
 		<module id="m1" name="content" title="Карта 1891 г. Реконструкция Сумароковых">
-			<gallery name="img"><img id="i1" src="userfiles/maps/map1891_reconstruction_sumrak/map1891_reconstruction_sumrakov_m1_i1.jpg" width="1000" height="1289"><preview src="userfiles/maps/map1891_reconstruction_sumrak/map1891_reconstruction_sumrakov_m1_i1_preview.jpg" width="78" height="100"/></img></gallery>
+			<gallery name="img"><img id="i1" src="userfiles/maps/map1891_reconstruction_sumrak/map1891_reconstruction_sumrakov_m1_i1.jpg" width="1000" height="1289"><preview src="userfiles/maps/map1891_reconstruction_sumrak/map1891_reconstruction_sumrakov_m1_i1_preview.jpg" width="200" height="257"/></img></gallery>
 			<html/>
 		</module>
 	</modules>

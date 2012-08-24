@@ -12,8 +12,8 @@
 				<place for="announce"/>
 				<place for="article"/>
 				<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="90" hasTitle="hasTitle">
-					<param name="image" uri="/%IMG_ID%.jpg?max=1600"/>
-					<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+					<param name="image" uri="/%IMG_ID%.jpg?max=1024&amp;waterMark=/images/__watermark.png&amp;waterW=65&amp;waterH=65&amp;waterAlpha=1&amp;waterOffsetX=9&amp;waterOffsetY=14&amp;waterOpacity=80"/>
+					<param name="image" uri="/%IMG_ID%_preview.jpg?w=200&amp;waterMark=/images/__watermark.png&amp;waterW=18&amp;waterH=18&amp;waterAlpha=1&amp;waterOffsetX=3&amp;waterOffsetY=4&amp;waterOpacity=80" preview="preview"/>
 				</field>
 				<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
 				<buttonset>
@@ -35,8 +35,8 @@
 				<place for="announce"/>
 				<place for="article"/>
 				<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="90" hasTitle="hasTitle">
-					<param name="image" uri="/%IMG_ID%.jpg?max=1600"/>
-					<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+					<param name="image" uri="/%IMG_ID%.jpg?max=1024&amp;waterMark=/images/__watermark.png&amp;waterW=65&amp;waterH=65&amp;waterAlpha=1&amp;waterOffsetX=9&amp;waterOffsetY=14&amp;waterOpacity=80"/>
+					<param name="image" uri="/%IMG_ID%_preview.jpg?w=200&amp;waterMark=/images/__watermark.png&amp;waterW=18&amp;waterH=18&amp;waterAlpha=1&amp;waterOffsetX=3&amp;waterOffsetY=4&amp;waterOpacity=80" preview="preview"/>
 				</field>
 				<field type="checkbox" name="active" label="Опубликовать" uri="#active"/>
 				<buttonset>

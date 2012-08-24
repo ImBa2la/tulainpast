@@ -2,7 +2,7 @@
 <section>
 	<modules>
 		<module id="m1" name="articles" title="Новости">
-			<list pageSize="10" pageParam="page" tagNameList="news" tagNameText="articlesRow" sort="asc" includeContent="1"/>
+			<list pageSize="10" pageParam="page" tagNameList="news" tagNameText="articlesRow" sort="desc" includeContent="1"/>
 		</module>
 	</modules>
 	<template id="default">

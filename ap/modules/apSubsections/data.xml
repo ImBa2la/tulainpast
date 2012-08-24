@@ -37,6 +37,7 @@
 	<form id="settings" title="Настройки" method="post" autocheck="autocheck" baseURI="file:///ap/xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
 		<param name="row" uri="/@id"/>
 		<field type="text" name="tab_title" label="Заголовок закладки" size="40" uri="/@title"/>
+		<field type="text" name="alias_pref" label="Префикс ссылки" size="40" uri="/form[@id='form_add']/@pref"/>
 		<field type="select" name="section_template" label="Шаблон для новых подразделов" uri="/template/@id">
 			<option value="">...</option>
 		</field>

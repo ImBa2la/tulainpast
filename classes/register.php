@@ -216,7 +216,7 @@ function activate($hash){
 	$mysql = new mysql();
 	if($hash && $res = $mysql->query("SELECT `id`,`name`, `email` FROM `".$mysql->getTableName('users')."` WHERE `active` = 0 AND `active_hash`= '".$hash."'", true)){	
 		$fields_value_mysql['active'] = 1;
-		$mysql->updateRow('users',$fields_value_mysql,'active_hash="'.$hash.'"');
+		$mysql->update('users',$fields_value_mysql,'active_hash="'.$hash.'"');
 		$_out->query('//section')->item(0)->appendChild($_out->createElement('html',null,"Благодарим за регистрацию, ".$res['name'].". Ваша учетная запись с ID ".$res['id']." активирована."));
 	}else throw new Exception("Page not Found",EXCEPTION_404);
 }

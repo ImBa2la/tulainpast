@@ -7,7 +7,7 @@
 		<field type="html" height="300" name="article" label="Статья" uri="#article"/>
 		<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="10">
 			<param name="image" uri="/%IMG_ID%.jpg?max=1024"/>
-			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200&amp;waterMark=/images/__watermark.png&amp;waterW=18&amp;waterH=18&amp;waterAlpha=1&amp;waterOffsetX=3&amp;waterOffsetY=4&amp;waterOpacity=80" preview="preview"/>
 		</field>
 		<field type="select" name="uid" label="Автор вопроса" uri="mysql://default/articles_guestbook?aid=%ID%#uid">
 			<option value="">...</option>
@@ -29,7 +29,7 @@
 		<field type="html" height="300" name="article" label="Статья" uri="#article"/>
 		<field type="image" name="image" label="Картинка" baseURI="file:///userfiles/articles/%SECTION%" max="10">
 			<param name="image" uri="/%IMG_ID%.jpg?max=1024"/>
-			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200" preview="preview"/>
+			<param name="image" uri="/%IMG_ID%_preview.jpg?w=200&amp;waterMark=/images/__watermark.png&amp;waterW=18&amp;waterH=18&amp;waterAlpha=1&amp;waterOffsetX=3&amp;waterOffsetY=4&amp;waterOpacity=80" preview="preview"/>
 		</field>
 		<field type="select" name="uid" label="Автор вопроса" uri="mysql://default/articles_guestbook#uid">
 			<option value="">...</option>

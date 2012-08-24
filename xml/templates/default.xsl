@@ -36,7 +36,7 @@
 <xsl:text disable-output-escaping="yes">&lt;!--[if lte IE 8]&gt;</xsl:text>
 <script src="js/html5.js"></script>
 <script type="text/javascript" src="css/PIE/PIE.js"></script>
-<script type="text/javascript">$(function(){if(window.PIE){$('section.gallery a, form input, form textarea').each(function(){PIE.attach(this);});}});</script>
+<script type="text/javascript">$(function(){if(window.PIE){$('.pie, section.gallery a, form input, form textarea').each(function(){PIE.attach(this);});}});</script>
 <xsl:text disable-output-escaping="yes">&lt;![endif]--&gt;</xsl:text>
 </head>
 <body>

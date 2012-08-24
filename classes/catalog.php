@@ -1,94 +1,75 @@
 <?
-class catalog extends module{
-function run(){
-	global $_out,$_params;
-	$xml = null;
-	if($g_uuid = array_shift($_params))
-		$xml = $this->getProducts($g_uuid);
-	else
-		$xml = $this->getCategories();
-	
-	if($xml)
-		$_out->addSectionContent($xml);
+class catalog extends articles{
+protected $table = 'catalog';
+protected $tableImg = 'catalog_images';
+protected $dirImg = 'catalog';
+function getTable(){
+	$tb = parent::getTable();
+	$tb->setJoins('
+left join `'.$tb->getTableName('currency').'` AS `crr` ON crr.id=ctl.id_currency'
+		,'ctl'
+		,'`ctl`.`id`'
+	);
+	$tb->setCustomFieldList('`ctl`.*,`ctl`.price*`crr`.rate as `price`,`crr`.title as `currency`');
+	$tb->addFloatFormat('price',2,'.');
+	return $tb;
 }
-function getProducts($g_uuid){
-	$mysql = new mysql;
-	if($g_uuid
-		&& ($rs = $mysql->query('SELECT g.title AS `group`,c.* FROM `'.$mysql->getTableName('catalog').'` AS c
-LEFT JOIN `'.$mysql->getTableName('catalog_groups').'` AS g ON c.g_uuid=g.uuid
-WHERE c.g_uuid="'.addslashes($g_uuid).'"'))
-		&& mysql_num_rows($rs)
+function getTableAlias(){
+	return 'ctl';
+}
+function setListMetaTitle($v){
+	if($this->getSection()->getParent() && $this->getSection()->getParent()->getId()!='catalog')
+		$v = $this->getSection()->getParent()->getTitle().' '.$v;
+	parent::setListMetaTitle($v);
+}
+function getListTable(){
+	$tb = parent::getListTable();
+	$tb->setAttrFields(array('id'));
+	$tb->setQueryFields(array('title','announce','price'));
+	$tb->addNl2Br('announce');
+	//$tb->setGroupingByField('section');
+	return $tb;
+}
+function getDetailTable(){
+	$tb = parent::getDetailTable();
+	$tb->setAttrFields(array('id'));
+	$tb->setQueryFields(array('title','article','price'));
+	return $tb;
+}
+function getDetailCondition($row){
+	return $this->f('active').'=1 and '.$this->f('id').'= '.intval($row);
+}
+function getListCondition(){
+	$ar = array($this->getSection()->getId());
+	if($chn = $this->getSection()->getChildren())
+		foreach($chn as  $sec) $ar[] = $sec->getId();
+	return $this->f('active').'=1 and '
+			.$this->f('section').' in ("'.implode('","',$ar).'")';
+}
+function announce($tagname,$flag,$title){
+	global $_out;
+	$tb = $this->getAnnounceTable();
+	$tb->setPageSize(10);
+	$tb->setAttrFields(array('id','section'));
+	$tb->setQueryFields(array('title','announce'));
+	if(($xml = $tb->listToXML($tagname
+				,$this->f('active').'=1 and `ctl`.`'.$flag.'`=1'
+				,$sort
+			))
+		&& ($e = $_out->xmlInclude($xml))
 	){
-		$xml = new xml(null,'products',false);
-		$root = $xml->de();
-		while($r = mysql_fetch_assoc($rs)){
-			if(!$root->hasAttribute('group'))
-				$root->setAttribute('group',$r['group']);
-			$prd =$root->appendChild($xml->createElement('prd',array('id' => $r['id']
-				,'title' => trim($r['title'])
-				,'price' => number_format($r['price'],0,',',' ')
-			)));
-			if(!$r['active']) $prd->setAttribute('notexists','notexists');
-		}
-		return $xml;
+		$e->setAttribute('title',$title);
+		$id = array();
+		$res = $_out->query('.//row[@id]',$e);
+		foreach($res as $row) $id[] = $row->getAttribute('id');
+		$img = $this->getImages($id,true);
+		foreach($res as $row) $this->setImages($row,$img,true);
 	}
 }
-function getCategories(){
-	global $_sec;
-	$mysql = new mysql;
-	if($rs = $mysql->query('SELECT p.id AS `pid`,count(c.id) as `num`,g.*
-FROM `'.$mysql->getTableName('catalog').'` AS c
-LEFT JOIN `'.$mysql->getTableName('catalog_groups').'` AS g ON c.g_uuid=g.uuid
-LEFT JOIN `'.$mysql->getTableName('catalog_groups').'` AS p ON g.g_uuid=p.uuid
-WHERE (c.section="'.$_sec->getId().'" AND c.active=1)
-GROUP BY g.id
-ORDER BY g.g_uuid,g.sort')
-	){
-		$xml = new xml(null,'groups',false);
-		while($r = mysql_fetch_assoc($rs)){
-			$this->addGroup($r,$xml);
-		}
-		$this->groups($xml);
-		return $xml;
-	}
-}
-function groups($xml){
-	$mysql = new mysql;
-	do{
-		$ar = array();
-		$res = $xml->query('/groups/group[@pid]');
-		foreach($res as $e) $ar[$e->getAttribute('pid')] = true;
-		if(count($ar)
-			&& ($rs = $mysql->query('SELECT p.id AS `pid`,g.* FROM `'.$mysql->getTableName('catalog_groups').'` AS g
-LEFT JOIN `'.$mysql->getTableName('catalog_groups').'` AS p ON g.g_uuid=p.uuid
-WHERE g.id IN ('.implode(',',array_keys($ar)).')
-GROUP BY g.id
-ORDER BY g.g_uuid,g.sort'))
-		)while($r = mysql_fetch_assoc($rs)){
-			$this->addGroup($r,$xml);
-		}
-	}while($res->length);
-}
-function addGroup($r,$xml){
-	$group = $xml->createElement('group',array('id' => $r['id'],'title' => trim($r['title']),'uuid' => $r['uuid']));
-	if($r['num']) $group->setAttribute('num',$r['num']);
-	if($r['pid']){
-		if($e = $xml->query('/groups//group[@id="'.$r['pid'].'"]')->item(0))
-			$group = $e->appendChild($group);
-		else{
-			$group = $xml->de()->appendChild($group);
-			$group->setAttribute('pid',$r['pid']);
-		}
-	}else
-		$group = $xml->de()->appendChild($group);
-	if($group->parentNode){
-		$res = $xml->query('/groups/group[@pid="'.$r['id'].'"]');
-		foreach($res as $e){
-			$e = $group->appendChild($e);
-			$e->removeAttribute('pid');
-		}
-		return $group;
-	}
+function onPageReady($params = null){
+	$this->announce('catalog','isNew','Новинки');
+	$this->announce('catalog','isSpecial','Эксклюзив');
+	$this->announce('catalog','isSeller','Ходовые товары');
 }
 }
 ?>

@@ -137,8 +137,8 @@ class images {
 		}
 	}
 	public function __destruct() {
-		imagedestroy($this->image);
-		imagedestroy($this->imageSource);
+		#imagedestroy($this->image);
+		#imagedestroy($this->imageSource);
 		unset($this->max);
 		unset($this->h);
 		unset($this->w);

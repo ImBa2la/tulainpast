@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <section>
 	<modules>
-		<module id="m1" name="apContent" title="Подписка и рассылка">
-			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
-				<field type="text" name="subject" label="Тема сообщения" size="60" check="empty" uri="/subject"/>
-				<field type="html" name="message" label="Сообщение" uri="/message" check="empty" height="350"/>
-				<buttonset>
-					<button type="submit" value="Сохранить" class="ok" action="save"/>
-				</buttonset>
-			</form>
-		</module>
 		<module id="m2" name="apSubscribers" title="Подписка и рассылка">
 			<form id="subscribers_form_edit" title="Изменить данные" method="post" autocheck="autocheck" baseURI="mysql://default/%TABLE%?id=%ID%">
 				<param name="row" uri="#id"/>
@@ -57,6 +48,15 @@
 					<action name="spam" title="Разослать сообщение"/>
 				</actions>
 			</rowlist>
+		</module><module id="m1" name="apContent" title="Рассылаемое письмо">
+			<form title="Редактирование раздела" id="content_form" method="post" autocheck="autocheck" baseURI="file:///xml/data/%ID%.xml?/section/modules/module[@id='%MD%']">
+				<field type="text" name="subject" label="Тема сообщения" size="60" check="empty" uri="/subject"/>
+				<field type="html" name="message" label="Сообщение" uri="/message" check="empty" height="350"/>
+				<buttonset>
+					<button type="submit" value="Сохранить" class="ok" action="save"/>
+				</buttonset>
+			</form>
 		</module>
+		
 	</modules>
 </section>

@@ -7,7 +7,7 @@
 	<sec id="guestbook" title="Гостевая" class="menu"/>
 	<sec id="images" title="Изображения" class="side">
 		<sec id="travelintime" title="Путешествие во времени" class="photo"/>
-		<sec id="sobfoto" title="Фотоархив" class="photo"/>
+		<sec id="sobfoto" title="Фотоархив" class="photo"><sec id="tula_streets" title="По тульским улочкам" class="photo_ext"><sec id="Surovsky" title="Суровский переулок" class="photo_ext"/></sec><sec id="Tula_photografs_galleries" title="Фотосессии тульских фотографов" class="photo_ext"/></sec>
 		<sec id="babusalbom" title="Бабушкин альбом" class="photo"/>
 		<sec id="sitizens" title="Туляки и годы" class="photo">
 			<sec id="76-tulyaki-do-1917" title="Фото туляков до 1917 года" class="photo">

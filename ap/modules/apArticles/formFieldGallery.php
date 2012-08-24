@@ -4,8 +4,10 @@ private $ff;
 private $formats;
 private $sortOrder;
 private $values;
-function __construct(formField $ff,$values = null){
+private $table;
+function __construct(formField $ff,$table,$values = null){
 	$this->ff = $ff;
+	$this->setImageTable($table);
 	$this->setValues($values);
 	if($this->ff->getRootElement()->hasAttribute('_ffg')){//Нельзя создавать больше одного объекта для одного поля
 		throw new Exception('Duplicate formFieldGallery object for "'.$this->ff->getName().'" field');
@@ -15,6 +17,9 @@ function __construct(formField $ff,$values = null){
 	$res = $xml->query('param',$ff->getRootElement());
 	foreach($res as $param) $this->formats[] = $param->parentNode->removeChild($param);
 	$this->ff->getRootElement()->setAttribute('_ffg','_ffg');
+}
+function setImageTable($t){
+	$this->table = $t;
 }
 function setValues($v){
 	$this->values = $v;
@@ -31,7 +36,7 @@ function imageId($fieldName){
 function deleteImages($id_article){
 	$mysql = new mysql();
 	if(
-		($rs = $mysql->query('select `id` from `'.$mysql->getTableName('articles_images').'` where `id_article`='.$id_article.' and `field_name`="'.addslashes($this->ff->getName()).'"'))
+		($rs = $mysql->query('select `id` from `'.$mysql->getTableName($this->table).'` where `id_article`='.$id_article.' and `field_name`="'.addslashes($this->ff->getName()).'"'))
 	)while($r = mysql_fetch_assoc($rs)){
 		foreach($this->formats as $param){
 			$e = $this->ff->getRootElement()->appendChild($param->cloneNode(true));
@@ -40,7 +45,7 @@ function deleteImages($id_article){
 		}
 	}
 	$this->ff->removeImageFiles();
-	$mysql->query('delete from `'.$mysql->getTableName('articles_images').'` where `id_article`='.$id_article.' and `field_name`="'.addslashes($this->ff->getName()).'"');
+	$mysql->query('delete from `'.$mysql->getTableName($this->table).'` where `id_article`='.$id_article.' and `field_name`="'.addslashes($this->ff->getName()).'"');
 }
 function prepareEdit($id_article){
 	$this->setValues(null);
@@ -98,7 +103,7 @@ private function load($id_article){
 	$values = $this->getSubmitImages();
 	$isUpdate = is_array($values);
 	$arId = $isUpdate ? array_keys($values['exist']) : array();
-	if(($rs = $mysql->query('select `id`,`title` from `'.$mysql->getTableName('articles_images').'` where `id_article`='.$id_article.' and `field_name`="'.addslashes($this->ff->getName()).'"'
+	if(($rs = $mysql->query('select `id`,`title` from `'.$mysql->getTableName($this->table).'` where `id_article`='.$id_article.' and `field_name`="'.addslashes($this->ff->getName()).'"'
 			.(count($arId) ? ' and `id` not in('.implode(',',$arId).')' : null).' order by `sort`')
 		)
 		&& mysql_num_rows($rs)
@@ -111,6 +116,8 @@ private function load($id_article){
 				$rowsToDelete[] = $r['id'];
 			}
 			foreach($this->formats as $param){
+				#vdump($param->getAttribute('preview'));
+				#vdump($e->getAttribute('uri'));
 				if(!$isUpdate && !$param->hasAttribute('preview')) continue;
 				$e = $this->ff->getRootElement()->appendChild($param->cloneNode(true));
 				$e->setAttribute('name',$fieldName);
@@ -119,7 +126,7 @@ private function load($id_article){
 			}
 		}
 		if($isUpdate && count($rowsToDelete))
-			$mysql->query('delete from `'.$mysql->getTableName('articles_images').'` where id in('.implode(',',$rowsToDelete).')');
+			$mysql->query('delete from `'.$mysql->getTableName($this->table).'` where id in('.implode(',',$rowsToDelete).')');
 	}
 	if($isUpdate){
 		$v = array();
@@ -128,7 +135,7 @@ private function load($id_article){
 		}
 		//vdump($values);
 		if(count($v)){
-			$mysql->query('insert into `'.$mysql->getTableName('articles_images').'` (`id`,`title`,`sort`) values '.implode(',',$v).' on duplicate key update `title`=values(`title`),`sort`=values(`sort`)');
+			$mysql->query('insert into `'.$mysql->getTableName($this->table).'` (`id`,`title`,`sort`) values '.implode(',',$v).' on duplicate key update `title`=values(`title`),`sort`=values(`sort`)');
 		}
 	}
 }
@@ -136,7 +143,7 @@ private function addNew($id_article){
 	if(!is_array($values = $this->getSubmitImages())) return;
 	$mysql = new mysql();
 	foreach($values['new'] as $img){
-		if($mysql->insert('articles_images',array(
+		if($mysql->insert($this->table,array(
 			'field_name'=>'"'.$this->ff->getName().'"'
 			,'id_article'=>$id_article
 			,'title'=>$img['title'] ? '"'.addslashes($img['title']).'"' : 'null'

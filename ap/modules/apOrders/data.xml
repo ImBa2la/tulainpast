@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<!-- Список записей -->
+	<rowlist id="list" pageSize="10" sort="asc">
+		<actions>
+			<action name="delete" title="Удалить выбранное"/>
+		</actions>
+		<col name="sort" header="№"/>
+		<col name="date" header="Дата заказа"/>
+		<col name="id" header="№ Заказа"/>
+		<col name="name" header="Имя"/>
+		<col name="sum" header="Сумма"/>
+		<buttons>
+			<button action="edit" title="Подробно"/>
+			<button action="delete" title="Удалить"/>
+		</buttons>
+	</rowlist>
+</data>

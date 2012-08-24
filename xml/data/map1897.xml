@@ -2,7 +2,7 @@
 <section>
 	<modules>
 		<module id="m1" name="content" title="План города Тула 1897 года">
-			<gallery name="img"><img id="i1" src="userfiles/maps/map1897/map1897_m1_i1.jpg" width="1000" height="1221"><preview src="userfiles/maps/map1897/map1897_m1_i1_preview.jpg" width="78" height="95"/></img></gallery>
+			<gallery name="img"><img id="i1" src="userfiles/maps/map1897/map1897_m1_i1.jpg" width="1000" height="1221"><preview src="userfiles/maps/map1897/map1897_m1_i1_preview.jpg" width="200" height="244"/></img></gallery>
 			<html/>
 		</module>
 	</modules>

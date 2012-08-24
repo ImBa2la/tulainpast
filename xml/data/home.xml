@@ -1,21 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<section><modules><module id="m1" name="content" title="Главная"><html>&lt;p&gt;Вступительный текст в котором есть:&lt;/p&gt;&#13;
-&lt;h1&gt;Заголовок первого уровня&lt;/h1&gt;&#13;
-&lt;h2&gt;Второго&lt;/h2&gt;&#13;
-&lt;h3&gt;И третьего уровней&lt;/h3&gt;&#13;
-&lt;ul&gt;&#13;
-&lt;li&gt;список нумерованный&lt;/li&gt;&#13;
-&lt;li&gt;список ненумерованный&lt;/li&gt;&#13;
-&lt;/ul&gt;&#13;
-&lt;ol&gt;&#13;
-&lt;li&gt;абзац&lt;/li&gt;&#13;
-&lt;li&gt;много сплошного текста&lt;/li&gt;&#13;
-&lt;/ol&gt;&#13;
-&lt;p&gt;как и обещалось тут будет много сплошного текста&amp;nbsp;Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos,&lt;/p&gt;&#13;
-&lt;h1&gt;qui ratione&lt;/h1&gt;&#13;
-&lt;p&gt;voluptatem sequi nesciunt, neque porro quisquam est, qui do&lt;strong&gt;lorem ipsum&lt;/strong&gt;, quia&amp;nbsp;&lt;strong&gt;dolor sit, amet, consectetur, adipisci&lt;/strong&gt;&amp;nbsp;v&lt;strong&gt;elit, sed&lt;/strong&gt;&amp;nbsp;quia non numquam&amp;nbsp;&lt;strong&gt;eius mod&lt;/strong&gt;i&amp;nbsp;&lt;strong&gt;tempor&lt;/strong&gt;a&amp;nbsp;&lt;strong&gt;incidunt, ut labore et dolore magna&lt;/strong&gt;m&amp;nbsp;&lt;strong&gt;aliqua&lt;/strong&gt;m quaerat voluptatem.&amp;nbsp;&lt;strong&gt;Ut enim ad minim&lt;/strong&gt;a&amp;nbsp;&lt;strong&gt;veniam, quis nostru&lt;/strong&gt;m&amp;nbsp;&lt;strong&gt;exercitation&lt;/strong&gt;em&amp;nbsp;&lt;strong&gt;ullam co&lt;/strong&gt;rporis suscipit&amp;nbsp;&lt;strong&gt;labori&lt;/strong&gt;o&lt;strong&gt;s&lt;/strong&gt;am,&amp;nbsp;&lt;strong&gt;nisi ut aliquid ex ea commod&lt;/strong&gt;i&amp;nbsp;&lt;strong&gt;consequat&lt;/strong&gt;ur?&amp;nbsp;&lt;strong&gt;Quis aute&lt;/strong&gt;m vel eum&amp;nbsp;&lt;strong&gt;iure reprehenderit,&lt;/strong&gt;&amp;nbsp;qui&amp;nbsp;&lt;strong&gt;in&lt;/strong&gt;&amp;nbsp;ea&amp;nbsp;&lt;strong&gt;voluptate velit esse&lt;/strong&gt;, quam nihil molestiae&amp;nbsp;&lt;strong&gt;c&lt;/strong&gt;onsequatur, vel&amp;nbsp;&lt;strong&gt;illum&lt;/strong&gt;, qui&amp;nbsp;&lt;strong&gt;dolore&lt;/strong&gt;m&lt;/p&gt;&#13;
-&lt;h2&gt;&amp;nbsp;&lt;strong&gt;eu&lt;/strong&gt;m&lt;strong&gt;fugiat&lt;/strong&gt;,&lt;/h2&gt;&#13;
-&lt;p&gt;quo voluptas&amp;nbsp;&lt;strong&gt;nulla pariatur&lt;/strong&gt;? At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias&amp;nbsp;&lt;strong&gt;exceptur&lt;/strong&gt;i&amp;nbsp;&lt;strong&gt;sint, obcaecat&lt;/strong&gt;i&amp;nbsp;&lt;strong&gt;cupiditat&lt;/strong&gt;e&amp;nbsp;&lt;strong&gt;non pro&lt;/strong&gt;v&lt;strong&gt;ident&lt;/strong&gt;, similique&amp;nbsp;&lt;strong&gt;sunt in culpa&lt;/strong&gt;,&amp;nbsp;&lt;strong&gt;qui officia &lt;/strong&gt;&lt;/p&gt;&#13;
-&lt;h3&gt;&lt;strong&gt;deserunt mollit&lt;/strong&gt;ia&amp;nbsp;&lt;/h3&gt;&#13;
-&lt;p&gt;&lt;strong&gt;anim&lt;/strong&gt;i,&amp;nbsp;&lt;strong&gt;id est laborum&lt;/strong&gt;&amp;nbsp;et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.&lt;/p&gt;&#13;
-&lt;p&gt;Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.&lt;/p&gt;</html></module></modules><template id="default"><template id="home"/></template></section>
+<section><modules><module id="m1" name="content" title="Главная"><html></html></module></modules><template id="default"><template id="home"/></template></section>

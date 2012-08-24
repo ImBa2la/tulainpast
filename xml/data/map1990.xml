@@ -2,7 +2,7 @@
 <section>
 	<modules>
 		<module id="m1" name="content" title="План города Тула 1990 года">
-			<gallery name="img"><img id="i1" src="userfiles/maps/map1990/map1990_m1_i1.jpg" width="1000" height="889"><preview src="userfiles/maps/map1990/map1990_m1_i1_preview.jpg" width="78" height="69"/></img></gallery>
+			<gallery name="img"><img id="i1" src="userfiles/maps/map1990/map1990_m1_i1.jpg" width="1000" height="889"><preview src="userfiles/maps/map1990/map1990_m1_i1_preview.jpg" width="200" height="177"/></img></gallery>
 			<html/>
 		</module>
 	</modules>

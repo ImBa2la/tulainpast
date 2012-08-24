@@ -1,8 +1,10 @@
 <?
 require_once 'formFieldGallery.php';
 class formGallery extends form{
-function __construct(DOMElement $e){
+private $tableImages;
+function __construct(DOMElement $e,$tableImages){
 	parent::__construct($e);
+	$this->tableImages = $tableImages;
 }
 function getImageFields(){
 	$xml = $this->getXML();
@@ -10,7 +12,7 @@ function getImageFields(){
 	$ffg = array();
 	foreach($res as $f)
 		if($ff = $this->getField($f->getAttribute('name')))
-			$ffg[] = new formFieldGallery($ff);
+			$ffg[] = new formFieldGallery($ff,$this->tableImages);
 	return $ffg;
 }
 function save($values,$row){

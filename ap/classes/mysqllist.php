@@ -18,7 +18,7 @@ function setQueryParams($params,$reset = false){
 	}
 	return $this->params;
 }
-static function getParams($params){
+static function getParams($params=false){
 	$defparams = array(
 		'idcol' => 'id',
 		'activecol' => 'active',
@@ -27,6 +27,7 @@ static function getParams($params){
 		'sortcontrol' => true,
 		'con' => 'default',
 		'cols' => '*',
+		'agregate' => null,
 		'table' => null,
 		'alias' => null,
 		'join' => null,
@@ -38,7 +39,7 @@ static function getParams($params){
 	);
 	return is_array($params) ? array_merge($defparams,$params) : $defparams;
 }
-static function select($params){
+static function select($params,$additional=false){
 	$params = mysqllist::getParams($params);
 	if(!is_array($params)
 		|| !$params['con']
@@ -49,14 +50,14 @@ static function select($params){
 	$mysql = new mysql($params['con']);
 	$params['table'] = $mysql->getTableName($params['table']);
 	extract($params);
-	$query = "SELECT $cols FROM `$table`"
+	$query = "SELECT ".(!$additional?$cols:$agregate)." FROM `$table`"
 		.($alias ? " AS `$alias`" : null)
 		.($join ? $join : null)
 		.($cond ? " WHERE $cond" : null)
 		.($group ? " GROUP BY $group" : null)
 		.($order ? " ORDER BY $order" : null)
-		.($limit ? " LIMIT $limit" : null);
-	return $mysql->query($query);
+		.($limit && !$additional ? " LIMIT $limit" : null);
+	return $mysql->query($query,($additional?true:false));
 }
 function importSettings(DOMElement $e){
 	$res = parent::importSettings($e);
@@ -80,13 +81,18 @@ function numRows(){
 		return $num_rows;
 	}
 }
-function build(){
+function build(){		
 	$params = $this->getParams($this->params);
 	$params['limit'] = $this->getStartIndex().','.$this->getPageSize();
 	if(!$params['order'] && $params['sortcol']){
 		$params['order'] = '`'.$params['sortcol'].'`'.($params['sortdirect'] ? ' '.$params['sortdirect'] : null);
 	}
 	if($rs = $this->select($params)){
+		if($params['agregate'] 
+		   && ($totals = $this->select($params,true)) 
+		){
+			$this->setTotals($totals);
+		}
 		$headers = $this->getHeaders();
 		$values = array();
 		$counter = $this->getStartIndex();

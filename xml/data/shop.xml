@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<section><modules><module id="m1" name="content" title="Магазинчик"/></modules></section>
+<section>
+	<modules>
+		<module id="m1" name="content" title="Магазинчик"/>
+		<module id="m2" name="catalog" title="Каталог продукции">
+			<list pageSize="10" pageParam="page" tagNameList="catalog" tagNameText="catalogRow" sort="desc"/>
+		</module>
+		<!--<module id="m3" name="orders" title="Заказы"/>-->
+	</modules>
+<template id="default"><template id="shop"/></template></section>

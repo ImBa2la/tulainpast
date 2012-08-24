@@ -18,7 +18,7 @@
 			</xsl:choose>
 		</h1>
 	</section>
-	<article class="content" id="content">
+	<article class="content shop" id="content">
 		<xsl:if test="articlesRow">
 			<section class="gallery">
 				<span class="left"></span><span class="right"></span>
@@ -45,7 +45,7 @@
 <xsl:template match="/page/structure//sec/sec" mode="squaregallery">
 	<li>
 		<a href="{@id}/">
-			<xsl:if test="@url"><xsl:attribute name="href"><xsl:value-of select="@url"/>/</xsl:attribute></xsl:if>
+			<xsl:if test="@url"><xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute></xsl:if>
 			<div class="img-wrapper2"><img src="image.php?src={@prv}&amp;w=167&amp;h=167" alt="{@title}" width="167" height="167">
 				<xsl:if test="not(@img)">
 					<xsl:attribute name="src">

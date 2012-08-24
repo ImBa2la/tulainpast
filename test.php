@@ -20,28 +20,31 @@ $_site = new site('xml/site.xml');
 
 /*******************************************************************************
  * content restore
- * /
+ */
 $sql = new mysql();
 $restore = array(
-	// 9 =>array('section'=>'whatthreat','module'=>'m1')
-	7 =>array('section'=>'news','module'=>'m1')
-	//,10=>array('section'=>'otkonkidotroll','module'=>'m1')
-	//,11=>array('section'=>'tulahistoric','module'=>'m1')
-	//,14=>array('section'=>'mempries','module'=>'m1')
-	//,15=>array('section'=>'tulastreets','module'=>'m1')
+	#9 =>array('section'=>'whatthreat','module'=>'m1')
+	#,7 =>array('section'=>'news','module'=>'m1')
+	#,10=>array('section'=>'otkonkidotroll','module'=>'m1')
+	#,11=>array('section'=>'tulahistoric','module'=>'m1')
+	#,14=>array('section'=>'mempries','module'=>'m1')
+	#,15=>array('section'=>'tulastreets','module'=>'m1')
 );
 
 foreach($restore as $sid=>$data){
-	echo 'Working with: '.$data['section'].' ...';
+	echo 'Working with: '.$data['section'].' ...<br/>';
+	$counter = 1;
+	$aidArray = array();
 	$q = 'DELETE from '.$sql->getTableName('articles').' where `section` = '.mysql::str($data['section']);
 	$sql->query($q);
-	$counter = 1;
-	$q = 'SELECT * FROM `tulainpast_db`.`jos_content` WHERE `sectionid` = '.$sid.' ORDER BY `created`';
-	//$q = 'SELECT * FROM `tulainpast_db`.'.$sql->getTableName('articles').' WHERE `section` = '.mysql::str($data['section']);
+	$q = 'SELECT * FROM `jos_content` WHERE `sectionid` = '.$sid.' ORDER BY `created` ASC';
+	#$q = 'SELECT * FROM `tulainpast_db`.'.$sql->getTableName('articles').' WHERE `section` = '.mysql::str($data['section']);
 	$rs = $sql->query($q);
 	while($res = mysql_fetch_assoc($rs)){
+		$aidArray[] = $res['id'];
 		$values = array(
-			'title'=>mysql::str($res['title'])
+			'id'=>$res['id'] + 200 #adding 200 (over that 179 rows photogallery) for excluding collision from photogallery it`s magic number
+			,'title'=>mysql::str($res['title'])
 			,'announce'=>mysql::str(preg_replace(
 					array(
 						'#src=([\"|\']{1})images#i'
@@ -68,17 +71,23 @@ foreach($restore as $sid=>$data){
 			,'module'=>mysql::str($data['module'])
 			,'section'=>mysql::str($data['section'])
 		);
-		$sql->insert($sql->getTableName('articles'),$values);
-		vdump(array($res,$values),false);
+		$sql->insert($sql->getTableName('articles'),$values); #add to main table
+		if($data['section'] != 'news'){#extend articles
+			$q = 'DELETE FROM '.$sql->getTableName('articles_relations').' where `aidStory`='.($res['id'] + 200);
+			$sql->query($q);
+			$sql->insert($sql->getTableName('articles_relations'),array('aidStory'=>($res['id'] + 200))); #add to relation table
+		}
+		#vdump(array($res,$values),false);
+			
 	}
-}*/
+}
 
 /*******************************************************************************
  * Reqursive Tree Catalog and make watermark for imges
- */
+ * /
 require 'classes/images.php';
 
-$dir = 'userfiles/image/'; #start directory
+$dir = 'userfiles/articles/babusalbom/babus3/'; #start directory
 function read_folder_directory($dir = "root_dir/dir"){ //make collection
 	$listDir = array(); 
 	if($handler = opendir($dir)) { 
@@ -96,15 +105,15 @@ function read_folder_directory($dir = "root_dir/dir"){ //make collection
 	return $listDir; 
 } 
 
-$files['userfiles']['image'] = read_folder_directory ($dir); 
+$files['userfiles']['articles']['babusalbom']['babus3'] = read_folder_directory ($dir); 
 
 
 function read_tree($tree,$path='',$offset = ''){
 	echo '<pre>';
 	foreach($tree as $name=>$brunch){
 		$water = 'images/__watermark.png';
-		$water	= new images($water,65,65,true,null,null,null,true);//large watermark
-		//$water	= new images($water,25,25,true,null,null,null,true);//prev watermark
+		$waterL	= new images($water,65,65,false,null,null,null,true);//large watermark
+		$waterS	= new images($water,18,18,true,null,null,null,true);//prev watermark
 		if(is_array($brunch)){
 			echo '=== dir : '.$name.', path: '.$path.'/'.$name.' ===<br/>';
 			read_tree($brunch,$path.'/'.$name, $offset.'&nbsp;&nbsp;&nbsp;&nbsp;');
@@ -113,40 +122,50 @@ function read_tree($tree,$path='',$offset = ''){
 			if(($ext = strtolower(pathinfo($src,PATHINFO_EXTENSION)))
 				&& ($ext== 'jpg') || ($ext == 'jpeg')
 			){
-				if(!is_dir($_SERVER['DOCUMENT_ROOT'].$path.'/temp')) mkdir($_SERVER['DOCUMENT_ROOT'].$path.'/temp');
+				#if(!is_dir($_SERVER['DOCUMENT_ROOT'].$path.'/temp')) mkdir($_SERVER['DOCUMENT_ROOT'].$path.'/temp');
+				#if(!strpos($brunch,'_preview')){
 				$img	= new images($src,null,null,false,null,null,null,false);
-				$img->addWatermark($water,8,14,80,'_right','_bottom');//large watermark
-				//$img->addWatermark($water,4,5,80,'_right','_bottom');//prev watermark
-				$img->save($_SERVER['DOCUMENT_ROOT'].$path.'/temp/'.$brunch);
-				//$img->__destroy();
+				if(strpos($brunch,'_preview')){
+					//set_time_limit (30);
+					$img->addWatermark($waterS,3,4,80,'_right','_bottom');//prev watermark
+					#$img->save($_SERVER['DOCUMENT_ROOT'].$path.'/temp/'.$brunch);
+					//$img->__destroy();
+				}else{
+					$img->addWatermark($waterL,9,14,80,'_right','_bottom');//large watermark
+				}
+				$img->save($_SERVER['DOCUMENT_ROOT'].$path.'/'.$brunch);
 			}
-			echo $offset.$src.'<br/>';
+			//echo $offset.$src.'<br/>';
 		}
 		//$water->__destruct();
 	}
 	echo '</pre>';
 }
-set_time_limit (60);
+#&amp;waterMark=/images/__watermark.png&amp;waterW=65&amp;waterH=65&amp;waterAlpha=1&amp;waterOffsetX=9&amp;waterOffsetY=14&amp;waterOpacity=80"/>
+#&amp;waterMark=/images/__watermark.png&amp;waterW=18&amp;waterH=18&amp;waterAlpha=1&amp;waterOffsetX=3&amp;waterOffsetY=4&amp;waterOpacity=80"
+set_time_limit (120);
 #foreach ($files as $file)
 	#echo '<pre>'.print_r(array($file,  pathinfo($dir)),true)."</pre>";
-//read_tree($files);
+#read_tree($files);
 
 /*******************************************************************************
  *  test images lib (watermark, text)
  * /
-$i = new images('test.jpg',null,null,false,null,null,null,false);
-$w = new images('images/__watermark.png',25,25,true,null,null,null,true);
-$i->addWatermark($w,4,5,80,'_right','_bottom');
+$i = new images('/test_b.jpg',null,null,false,null,null,null,false);
+#$i = new images('/test.jpg',null,null,false,null,null,null,false);#for preview
+$w = new images('/images/__watermark.png',65,65,false,null,null,null,true);
+#$w = new images('/images/__watermark.png',18,18,false,null,null,null,true);#for preview
+$i->addWatermark($w,9,14,80,'_right','_bottom');
 $i->save('test_w.jpg');
 
-$water	= new images($water,50,50,true,null,null,0xFF0000,false);
-$img	= new images($src,500,200,true,null,null,null,false);
-$img->addText("I wrote about you!",'font.ttf', 14, 0, 0, 'right_', 'bottom',null,"#FFffff",0);
+#$water	= new images($water,50,50,true,null,null,0xFF0000,false);
+#$img	= new images($src,500,200,true,null,null,null,false);
+#$img->addText("I wrote about you!",'font.ttf', 14, 0, 0, 'right_', 'bottom',null,"#FFffff",0);
 
 #$img->save('test.jpg');
 #$water->imageStream();
 #$img->imageStream();
- */
+# */
 
 
 /*******************************************************************************

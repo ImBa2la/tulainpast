@@ -8,12 +8,11 @@ class mysqlToXml extends mysqlTable{
 	var $fieldCond = array();
 	var $fieldDate = array();
 	var $currentSection;
-function __construct($table,$section_control = true,$sort_control = true){
+function __construct($table){
 	global $_page;
-	parent::__construct($table,$section_control,$sort_control);
+	parent::__construct($table);
 	$this->image = null;
 	$this->setIdField('id');
-	$this->sort_type = 'asc';
 	$this->setPageParamName('x-x-x');
 	$this->setRowSize(null);
 	$this->setPageSize(10);
@@ -84,7 +83,6 @@ function listToXML($outTagname,$condition = null,$sort = null,$query = null,$lim
 	if($this->pagingUrl) $outTag->setAttribute('pagingUrl',$this->pagingUrl);
 	if(isset($this->groupingField)){
 		if($sort) $sort = $this->groupingField.','.$sort;
-		elseif($this->sort_control) $sort = $this->groupingField.', sort'.($this->sort_type!='' ? ' '.$this->sort_type : '');
 		else $sort = $this->groupingField;
 	}
 	if($lim){

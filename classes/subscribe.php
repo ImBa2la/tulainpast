@@ -13,7 +13,7 @@ class subscribe {
 		
 		if($_SESSION['login'] //registred users
 			&& ($res = $mysql->query('select * from '.$mysql->getTableName('users').' where `login`="'.$_SESSION['login'].'"',true))
-			&& $mysql->updateRow(
+			&& $mysql->update(
 				$mysql->getTableName('users')
 				,array('subscribe'=>($params['subs']['act'] == 0)?0:1)
 				,'`login`="'.$_SESSION['login'].'"'
@@ -25,7 +25,7 @@ class subscribe {
 		}elseif($params['subs']['email'] && mymail::isEmail($params['subs']['email'])){
 			$q = 'select * from '.$mysql->getTableName('users').' where `email`="'.$params['subs']['email'].'"';
 			if($res = $mysql->query($q,true) &&
-				$mysql->updateRow(
+				$mysql->update(
 					 $mysql->getTableName('users')
 					,array('subscribe'=>($params['subs']['act'] == 0)?0:1)
 					,'`email`="'.$params['subs']['email'].'"'

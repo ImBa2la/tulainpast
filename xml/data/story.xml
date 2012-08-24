@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<section><modules/></section>
+<section><modules><module id="m2" name="content" title="Текстовое содержание"><html>&lt;p&gt;test2&lt;/p&gt;</html></module></modules></section>

@@ -88,7 +88,7 @@ function run(){
 		&& ($modules = $sec->getModules())
 		&& ($m = $modules->getById('m1'))
 	){
-		$_events->addListener('PageReady',$m,array('tagname' => 'news','sort' => 'desc','size' => 3));	
+		$_events->addListener('PageReady',$m,array('tagname' => 'news','sort' => 'sort desc','size' => 3));	
 		
 	}
 	

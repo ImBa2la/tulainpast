@@ -105,7 +105,7 @@ function run(){
 			case 'active':
 				if($row){
 					$state = !(param('active')=='on');
-					$res = $mysql->updateRow('articles',array(
+					$res = $mysql->update('articles',array(
 						'active' => $state ? '1' : '0'
 					),'`id`='.$row);
 					if(!$res) $state = !$state;

@@ -6,16 +6,16 @@
 		</module>
 	<module id="m3" name="registration" title="Форма регистрации"><form id="feedback_form" method="post" autocheck="autocheck" baseURI="mysql://%CONNECT%/%TABLE%#" theme="Новый пользователь зарегистрировался на сайте" email="kirill@forumedia.ru,kuppb@mail.ru" emailTpl="email_feedback" sendUser="1" themeUser="Регистрация на сайте tulainpast.ru" emailTplUser="email_register" dbSave="1" dbConnect="default" dbTable="users">
 		<param name="action" value="feedback"/>
-		<param name="active_hash" uri="active_hash" />
-		<param name="date" uri="date" />
-		<field type="text" name="name" label="Имя" check="empty" mysql="name" size="40" uri="name"/>
-		<field type="text" name="first-name" label="Фамилия" check="empty" mysql="surname" size="40" uri="surname"/>
-		<field type="text" name="phone" label="Телефон" check="empty" mysql="phone" size="40" uri="phone"/>
+		<param name="active_hash" uri="active_hash"/>
+		<param name="date" uri="date"/>
+		<field type="text" name="name" label="Имя" check="empty" mysql="name" size="40" uri="name" mail="1"/>
+		<field type="text" name="first-name" label="Фамилия" check="empty" mysql="surname" size="40" uri="surname" mail="1"/>
+		<field type="text" name="phone" label="Телефон" mysql="phone" size="40" uri="phone"/>
 		<field type="email" name="email" label="Адрес электронной почты" check="empty email" mysql="email" size="40" uri="email"/>
-		<field type="text" name="loginR" label="Логин" login="login" check="empty" mysql="login" size="40" uri="login"/>
-		<field type="password" name="passwordR" label="Пароль" check="empty" uri="password" mysql="password"/>
+		<field type="text" name="loginR" label="Логин" login="login" check="empty" mysql="login" size="40" uri="login" mail="1"/>
+		<field type="password" name="passwordR" label="Пароль" check="empty" uri="password" mysql="password" mail="1" size="40"/>
 		<field type="password" name="passwordR-check" label="Подтверждение пароля" check="empty"/>
-		<field type="textarea" name="comment" label="Примечания" rows="6" mysql="comment" size="40" uri="comment"/>
+		<field type="textarea" name="comment" label="Примечания" rows="6" mysql="comment" size="40" uri="comment" mail="1"/>
 		<field type="captcha" name="captcha" label="Введите результат выражения с картинки (цифрами)" class="capcha" check="empty" show="1"/>
 		<buttongroup>
 			<button type="submit" name="submit" value="Отправить" class="submit-1"/>

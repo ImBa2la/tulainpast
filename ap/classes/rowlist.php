@@ -1,6 +1,7 @@
 <?
 class rowlist extends taglist{
 private $headers = array();
+private $totals = array();
 private $buttons;
 function __construct($val,$num_rows = null,$cur_page = null,$page_size = null){
 	$xml = new xml('xml/_rowlist'.microtime().'.tmp.xml','rowlist');
@@ -43,6 +44,15 @@ function importSettings(DOMElement $e){
 			: $col->getAttribute('header');
 	}
 	$this->setHeaders($headers);
+        
+	if($t = $xml->query('totals',$e)->item(0)){
+		$node = $this->getXML()->dd()->importNode($t,true);
+		$this->getRootElement()->appendChild($node);    
+	}
+	if($filter = $xml->query('filter',$e)->item(0)){
+		$node = $this->getXML()->dd()->importNode($filter,true);
+		$this->getRootElement()->appendChild($node);    
+	}
 	
 	$buttons = array();
 	$res = $xml->query('buttons/button',$e);
@@ -57,6 +67,32 @@ function setButtons($val){
 	if($val && is_array($val)){
 		$this->buttons = $val;
 	}
+}
+function getTotals(){return $this->totals;}
+function setTotals($val){
+   if($val && is_array($val)){
+        $this->totals = array_keys($val);
+        $xml = $this->getXML();
+        if($e = $xml->query('totals',$this->e)->item(0)){
+            foreach($val as $key=>$v){
+                if($t = $xml->query('total[@name="'.$key.'"]',$e)->item(0)){
+                    $t->setAttribute('value',$v);
+                }
+            }
+        }
+   }     
+}
+function setFilter($val){
+if($val && is_array($val)){
+	$xml = $this->getXML();
+	if($e = $xml->query('filter',$this->e)->item(0)){
+		foreach($val as $key=>$v){
+			if($f = $xml->query('field[@name="'.$key.'"]',$e)->item(0)){
+				$f->setAttribute('value',$v);
+			}
+		}
+	}
+}     
 }
 function setHeaders($val){
 	if($val && is_array($val)){

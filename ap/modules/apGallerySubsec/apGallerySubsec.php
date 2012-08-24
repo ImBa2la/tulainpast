@@ -19,6 +19,16 @@ function onNew($action){
 		$ff->addOption($sec->getAttribute('id'),$sec->getAttribute('title'));
 	parent::onNew($action);
 }
+function onUpdate($action){
+	if($row = $this->getRow()){
+		$mysql = new mysql();
+		$res = $mysql->query('select * from `'.$mysql->getTableName('secgallery_relation').'` where `aid`='.(int)$row,true);
+		if(count($res) == 0)
+			$mysql->insert('secgallery_relation',array('aid'=>$row));
+		
+		return parent::onUpdate($action);
+	}
+}
 function onDelete($action){
 	if(($row = $this->getRow())
 		&& parent::onDelete($row)

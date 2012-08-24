@@ -8,6 +8,23 @@
 		<h1><xsl:value-of select="@title"/></h1>
 	</xsl:if>
 	<xsl:variable name="id" select="generate-id()"/>
+	<xsl:variable name="url">
+		<xsl:choose>
+				<xsl:when test="@sortUri"><xsl:value-of select="@sortUri" /></xsl:when>
+				<xsl:otherwise>
+					<xsl:text>?id=</xsl:text>
+					<xsl:value-of select="$_sec/@id"/>
+					<xsl:text disable-output-escaping="yes">&amp;md=</xsl:text>
+					<xsl:value-of select="/page/tabs/tab[@selected='selected']/@id"/>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:if test="headers/h[@sort='asc' or @sort='desc']">
+				<xsl:text disable-output-escaping="yes">&amp;order[]=</xsl:text>
+				<xsl:value-of select="headers/h[@sort='asc' or @sort='desc']/@name"/>
+				<xsl:text disable-output-escaping="yes">&amp;order[]=</xsl:text>
+				<xsl:value-of select="headers/h[@sort='asc' or @sort='desc']/@sort"/>
+			</xsl:if>
+	</xsl:variable>
 	<script type="text/javascript"><xsl:text disable-output-escaping="yes">
 function onDel(){return confirm('Подтвердите удаление');};
 function onMove(a){var p=parseInt(prompt('Введите новую позицию'));if(p){if(isNaN(p)||p&lt;=0)alert('Позиция должна быть целым числом больше ноля');else{a.href=a.href+'&amp;pos='+p;return true}};return false;};
@@ -32,24 +49,18 @@ function onMultiDel(e){
 		e.form.action.value='delete';
 		e.form.submit();
 	};
-};</xsl:text>
+};
+</xsl:text>
 	</script>
+	<xsl:apply-templates select="filter">
+		<xsl:with-param name="url" select="$url" />
+	</xsl:apply-templates>
+
 	<form id="{$id}" action="{@uri}#{$id}" method="post">
 		<xsl:call-template name="page_navigator">
 			<xsl:with-param name="numpages" select="number(@numPages)"/>
 			<xsl:with-param name="page" select="number(@curPage)"/>
-			<xsl:with-param name="url">
-				<xsl:text>?id=</xsl:text>
-				<xsl:value-of select="$_sec/@id"/>
-				<xsl:text disable-output-escaping="yes">&amp;md=</xsl:text>
-				<xsl:value-of select="/page/tabs/tab[@selected='selected']/@id"/>
-				<xsl:if test="headers/h[@sort='asc' or @sort='desc']">
-					<xsl:text disable-output-escaping="yes">&amp;order[]=</xsl:text>
-					<xsl:value-of select="headers/h[@sort='asc' or @sort='desc']/@name"/>
-					<xsl:text disable-output-escaping="yes">&amp;order[]=</xsl:text>
-					<xsl:value-of select="headers/h[@sort='asc' or @sort='desc']/@sort"/>
-				</xsl:if>
-			</xsl:with-param>
+			<xsl:with-param name="url" select="$url" />
 		</xsl:call-template>
 		<table class="rows">
 			<xsl:apply-templates select="headers"/>
@@ -58,19 +69,9 @@ function onMultiDel(e){
 		<xsl:call-template name="page_navigator">
 			<xsl:with-param name="numpages" select="number(@numPages)"/>
 			<xsl:with-param name="page" select="number(@curPage)"/>
-			<xsl:with-param name="url">
-				<xsl:text>?id=</xsl:text>
-				<xsl:value-of select="$_sec/@id"/>
-				<xsl:text disable-output-escaping="yes">&amp;md=</xsl:text>
-				<xsl:value-of select="/page/tabs/tab[@selected='selected']/@id"/>
-				<xsl:if test="headers/h[@sort='asc' or @sort='desc']">
-					<xsl:text disable-output-escaping="yes">&amp;order[]=</xsl:text>
-					<xsl:value-of select="headers/h[@sort='asc' or @sort='desc']/@name"/>
-					<xsl:text disable-output-escaping="yes">&amp;order[]=</xsl:text>
-					<xsl:value-of select="headers/h[@sort='asc' or @sort='desc']/@sort"/>
-				</xsl:if>
-			</xsl:with-param>
+			<xsl:with-param name="url" select="$url" />
 		</xsl:call-template>
+		<xsl:apply-templates select="totals" />
 		<input type="hidden" name="action" value=""/>
 		<xsl:apply-templates select="actions/action"/>
 		<xsl:if test="@add">
@@ -177,4 +178,47 @@ function onMultiDel(e){
 	</a>
 </xsl:template>
 
+<!-- Статистика -->
+<xsl:template match="totals">
+	<xsl:if test="@header"><h2><xsl:value-of select="@header" /></h2></xsl:if>
+    <table class="totals">
+        <xsl:apply-templates select="total" />
+    </table>
+</xsl:template>
+<xsl:template match="totals/total">
+    <tr>
+        <td><xsl:value-of select="@header" /></td>
+        <td colspan="{count(ancestor::rowlist/headers/h) -1}" align="right">
+            <xsl:value-of select="@value" />
+        </td>
+    </tr>
+</xsl:template>
+
+<!-- Фильтр -->
+<xsl:template match="filter">
+	<xsl:param name="url" />
+	<form id="filter" class="default" action="{$url}" method="post" >
+		<xsl:apply-templates select="field" />
+		<input type="submit" class="filter" value="{@label}" />
+	</form>
+</xsl:template>
+<xsl:template match="filter/field[@type='text']">
+	<script type="text/javascript">
+	<xsl:text></xsl:text>
+	</script>
+	<input type="{@type}" name="cond[{@name}]" id="{@name}" maxlength="255" value="{@label}" 
+		onfocus="this.value = (this.value == '{@label}')? '':this.value;" 
+		onblur="this.value = (this.value == '')?'{@label}':this.value;"
+	>
+		<xsl:attribute name="value">
+			<xsl:choose>
+				<xsl:when test="@value"><xsl:value-of select="@value" /></xsl:when>
+				<xsl:otherwise><xsl:value-of select="@label" /></xsl:otherwise>
+			</xsl:choose>
+		</xsl:attribute>
+		<xsl:if test="@size">
+			<xsl:attribute name="size"><xsl:value-of select="@size"/></xsl:attribute>
+		</xsl:if>
+	</input>
+</xsl:template>
 </xsl:stylesheet>
